@@ -1,8 +1,10 @@
 ---
 name: wazuh-api
-
-templates: {}
-
-packages: []
-
-properties: {}
+packages:
+- wazuh-api
+- nodejs
+templates:
+  bin/ctl.sh: bin/ctl.sh  
+properties:
+  ossec.authd.password:
+    description: "password for authd for agents to use"

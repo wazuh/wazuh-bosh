@@ -22,6 +22,8 @@ jobs:
   templates:
   - name: ossec-server
     release: ossec
+  - name: wazuh-api
+    release: ossec
 - instances: 1
   name: ossec-agent
   networks:
