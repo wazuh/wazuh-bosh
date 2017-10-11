@@ -74,3 +74,8 @@ By default the version number will be bumped to the next major number. You can s
 ```
 bosh create release --final --version 2.1
 ```
+
+## Credits and thank you
+
+This Bosh Release has been authored by Long Nguyen (https://github.com/cloudfoundry-community/ossec-boshrelease) ,Wazuh has forked it with the purpose of maintaining it. Thank you to the authors for the contribution.
+
