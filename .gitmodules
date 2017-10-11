@@ -1,0 +1,6 @@
+[submodule "src/wazuh-ruleset"]
+        path = src/wazuh-ruleset
+        url = https://github.com/wazuh/wazuh-ruleset
+[submodule "wazuh-ruleset"]
+        path = wazuh-ruleset
+        url = https://github.com/wazuh/wazuh-ruleset/
