@@ -1,0 +1,8 @@
+---
+name: wazuh-api
+
+templates: {}
+
+packages: []
+
+properties: {}
