@@ -13,9 +13,19 @@ jobs:
     static_ips:
     - 10.244.221.3
   persistent_disk: 8192
+  properties:
+    elasticsearch:
+      node:
+        allow_data: true
+        allow_master: true
+  resource_pool: small_z1
   templates:
   - name: ossec-server
     release: ossec
+  - name: forwarder
+    release: ossec
+  - name: node
+    release: ossec 
 - instances: 1
   name: ossec-agent
   networks:
@@ -36,6 +46,20 @@ networks:
     - 10.244.221.2 - 10.244.221.60
   type: manual
 properties:
+  elasticsearch:
+    cluster_name: ossec
+    exec:
+      environment:
+        ES_HEAP_SIZE: 500000K
+    master_hosts:
+    - 10.244.221.3
+  forwarder:
+    elasticsearch_hosts:
+    - 10.244.221.3
+  kibana:
+    elasticsearch:
+      host: 10.244.221.3
+      port: 9200
   ossec:
     agent:
       server_ip: 10.244.221.3
@@ -109,4 +133,6 @@ update:
   max_in_flight: 50
   serial: true
   update_watch_time: 1000-30000
+
+
 

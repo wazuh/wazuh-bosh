@@ -1,7 +1,7 @@
-node/node-v6.11.4.tar.gz:
-  size: 26916322
-  object_id: 2d96ca90-6abb-4b56-59ef-862abe6c0133
-  sha: 75b22881b4581bc7b09d0f829c06ad1c1f1fd92e
+node/node-v6.11.4-linux-x64.tar.xz:
+  size: 9355460
+  object_id: 325541e5-f178-46b2-55f9-786878fb34b0
+  sha: ee6936f7539e0b460046a0f6213abd718b9351a7
 wazuh/wazuh-2.1.1.tar.gz:
   size: 9349728
   object_id: 7a6eb51d-3215-4993-6e84-02d77bb09132
