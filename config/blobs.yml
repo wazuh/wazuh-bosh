@@ -1,15 +1,3 @@
-filebeat/filebeat-5.6.3-linux-x86_64.tar.gz:
-  size: 8833092
-  object_id: 597b929c-063c-40f8-7923-16f79a771283
-  sha: 1c9aa4a6290f4b771446d862d8b5d90cf44e4a39
-java8/openjdk-1.8.0_91.tar.gz:
-  size: 78277858
-  object_id: f6307bb1-61a6-469e-b213-479e838a7739
-  sha: 47d80f031060012c8be907c0139091fe6b4e53f7
-logstash/logstash-5.0.1.tar.gz:
-  size: 104848557
-  object_id: 86203d59-0b82-4af0-a7c0-d9a3199d7277
-  sha: be33edf6d9d7c9607247310e13392a6bea21af8d
 node/node-v6.11.4.tar.gz:
   size: 26916322
   object_id: 2d96ca90-6abb-4b56-59ef-862abe6c0133

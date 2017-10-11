@@ -1,0 +1,12 @@
+#!/bin/bash
+
+mkdir -p /var/vcap/data/ossec-agent
+if [ ! -d /var/vcap/data/ossec-agent/bin ]
+then
+  cp -R /var/vcap/packages/ossec-agent/. /var/vcap/data/ossec-agent/.
+fi
+
+if [ ! -s /var/vcap/data/ossec-agent/etc/client.keys ]
+then
+  /var/vcap/packages/ossec-agent/bin/agent-auth -m <%= properties.ossec.agent.server_ip %> -A <%= spec.name %>-<%= spec.id %> -P <%= properties.ossec.authd.password %> -g root
+fi

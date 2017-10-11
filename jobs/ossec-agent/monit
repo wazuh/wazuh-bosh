@@ -1,0 +1,23 @@
+check process ossec-execd
+  with pidfile /var/vcap/sys/run/ossec-agent/ossec-execd.pid
+  start program "/var/vcap/jobs/ossec-agent/bin/monit_debugger ossec-execd-ctl '/var/vcap/jobs/ossec-agent/bin/ossec-execd-ctl start'"
+  stop program "/var/vcap/jobs/ossec-agent/bin/monit_debugger ossec-execd-ctl '/var/vcap/jobs/ossec-agent/bin/ossec-execd-ctl stop'"
+  group vcap
+
+check process ossec-logcollector
+  with pidfile /var/vcap/sys/run/ossec-agent/ossec-logcollector.pid
+  start program "/var/vcap/jobs/ossec-agent/bin/monit_debugger ossec-logcollector-ctl '/var/vcap/jobs/ossec-agent/bin/ossec-logcollector-ctl start'"
+  stop program "/var/vcap/jobs/ossec-agent/bin/monit_debugger ossec-logcollector-ctl '/var/vcap/jobs/ossec-agent/bin/ossec-logcollector-ctl stop'"
+  group vcap
+
+check process ossec-agentd
+  with pidfile /var/vcap/sys/run/ossec-agent/ossec-agentd.pid
+  start program "/var/vcap/jobs/ossec-agent/bin/monit_debugger ossec-agentd-ctl '/var/vcap/jobs/ossec-agent/bin/ossec-agentd-ctl start'"
+  stop program "/var/vcap/jobs/ossec-agent/bin/monit_debugger ossec-agentd-ctl '/var/vcap/jobs/ossec-agent/bin/ossec-agentd-ctl stop'"
+  group vcap
+
+check process ossec-syscheckd
+  with pidfile /var/vcap/sys/run/ossec-agent/ossec-syscheckd.pid
+  start program "/var/vcap/jobs/ossec-agent/bin/monit_debugger ossec-syscheckd-ctl '/var/vcap/jobs/ossec-agent/bin/ossec-syscheckd-ctl start'"
+  stop program "/var/vcap/jobs/ossec-agent/bin/monit_debugger ossec-syscheckd-ctl '/var/vcap/jobs/ossec-agent/bin/ossec-syscheckd-ctl stop'"
+  group vcap

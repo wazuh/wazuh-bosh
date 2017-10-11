@@ -1,0 +1,41 @@
+check process ossec-execd
+  with pidfile /var/vcap/sys/run/ossec-server/ossec-execd.pid
+  start program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-execd-ctl '/var/vcap/jobs/ossec-server/bin/ossec-execd-ctl start'"
+  stop program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-execd-ctl '/var/vcap/jobs/ossec-server/bin/ossec-execd-ctl stop'"
+  group vcap
+
+check process ossec-analysisd
+  with pidfile /var/vcap/sys/run/ossec-server/ossec-analysisd.pid
+  start program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-analysisd-ctl '/var/vcap/jobs/ossec-server/bin/ossec-analysisd-ctl start'"
+  stop program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-analysisd-ctl '/var/vcap/jobs/ossec-server/bin/ossec-analysisd-ctl stop'"
+  group vcap
+
+check process ossec-logcollector
+  with pidfile /var/vcap/sys/run/ossec-server/ossec-logcollector.pid
+  start program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-logcollector-ctl '/var/vcap/jobs/ossec-server/bin/ossec-logcollector-ctl start'"
+  stop program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-logcollector-ctl '/var/vcap/jobs/ossec-server/bin/ossec-logcollector-ctl stop'"
+  group vcap
+
+check process ossec-remoted
+  matching "ossec-remoted"
+  start program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-remoted-ctl '/var/vcap/jobs/ossec-server/bin/ossec-remoted-ctl start'"
+  stop program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-remoted-ctl '/var/vcap/jobs/ossec-server/bin/ossec-remoted-ctl stop'"
+  group vcap
+
+check process ossec-syscheckd
+  with pidfile /var/vcap/sys/run/ossec-server/ossec-syscheckd.pid
+  start program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-syscheckd-ctl '/var/vcap/jobs/ossec-server/bin/ossec-syscheckd-ctl start'"
+  stop program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-syscheckd-ctl '/var/vcap/jobs/ossec-server/bin/ossec-syscheckd-ctl stop'"
+  group vcap
+
+check process ossec-monitord
+  with pidfile /var/vcap/sys/run/ossec-server/ossec-monitord.pid
+  start program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-monitord-ctl '/var/vcap/jobs/ossec-server/bin/ossec-monitord-ctl start'"
+  stop program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-monitord-ctl '/var/vcap/jobs/ossec-server/bin/ossec-monitord-ctl stop'"
+  group vcap
+
+check process ossec-authd
+  with pidfile /var/vcap/sys/run/ossec-server/ossec-authd.pid
+  start program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-authd-ctl '/var/vcap/jobs/ossec-server/bin/ossec-authd-ctl start'"
+  stop program "/var/vcap/jobs/ossec-server/bin/monit_debugger ossec-authd-ctl '/var/vcap/jobs/ossec-server/bin/ossec-authd-ctl stop'"
+  group vcap

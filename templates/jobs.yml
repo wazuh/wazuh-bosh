@@ -1,0 +1,43 @@
+meta:
+  environment: ~
+
+update:
+  canaries: 1
+  max_in_flight: 50
+  canary_watch_time: 1000-30000
+  update_watch_time: 1000-30000
+  serial: true
+
+jobs:
+  - name: ossec-server
+    templates:
+    - name: elasticsearch
+      release: logsearch
+    - name: kibana
+      release: logsearch
+    - name: ossec-server
+      release: ossec
+    - name: forwarder
+      release: ossec
+    instances: 1
+    persistent_disk: 8192
+    resource_pool: small_z1
+    networks: (( param "please set ossec-server networks" ))
+    properties:
+      elasticsearch:
+        node:
+          allow_data: true
+          allow_master: true
+
+  - name: ossec-agent
+    templates:
+    - name: ossec-agent
+      release: ossec
+    instances: 1
+    persistent_disk: 0
+    resource_pool: small_z1
+    networks: (( param "please set ossec-agent networks" ))
+
+networks: (( param "please set networks" ))
+
+

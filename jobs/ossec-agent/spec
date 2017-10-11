@@ -1,0 +1,22 @@
+---
+name: ossec-agent
+packages:
+- ossec-agent
+templates:
+  bin/pre-start: bin/pre-start
+  bin/monit_debugger: bin/monit_debugger
+  bin/ossec-execd-ctl: bin/ossec-execd-ctl
+  bin/ossec-agentd-ctl: bin/ossec-agentd-ctl
+  bin/ossec-logcollector-ctl: bin/ossec-logcollector-ctl
+  bin/ossec-syscheckd-ctl: bin/ossec-syscheckd-ctl
+  config/ossec.conf.erb: config/ossec.conf
+  data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+
+properties:
+  ossec.authd.password:
+    description: "password for authd for agents to use"
+
+  ossec.agent.server_ip:
+    description: "ip of ossec server"

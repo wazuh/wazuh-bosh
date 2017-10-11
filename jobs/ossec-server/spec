@@ -1,0 +1,28 @@
+---
+name: ossec-server
+packages:
+- ossec-server
+templates:
+  bin/pre-start: bin/pre-start
+  bin/ossec-maild-ctl: bin/ossec-maild-ctl
+  bin/ossec-authd-ctl: bin/ossec-authd-ctl
+  bin/ossec-execd-ctl: bin/ossec-execd-ctl
+  bin/ossec-analysisd-ctl: bin/ossec-analysisd-ctl
+  bin/ossec-logcollector-ctl: bin/ossec-logcollector-ctl
+  bin/ossec-remoted-ctl: bin/ossec-remoted-ctl
+  bin/ossec-syscheckd-ctl: bin/ossec-syscheckd-ctl
+  bin/ossec-monitord-ctl: bin/ossec-monitord-ctl
+  bin/monit_debugger: bin/monit_debugger
+  config/ossec.conf.erb: config/ossec.conf
+  config/ssl_cert.pem: config/ssl/ssl_cert.pem
+  config/ssl_key.pem: config/ssl/ssl_key.pem
+  data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+properties:
+  ossec.authd.password:
+    description: "password for authd for agents to use"
+  ossec.authd.ssl_cert:
+    description: "ssl cert for authd"
+  ossec.authd.ssl_key:
+    description: "ssl key for authd"

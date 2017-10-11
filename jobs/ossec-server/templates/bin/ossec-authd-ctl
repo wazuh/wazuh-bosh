@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+# Setup env vars and folders for the webapp_ctl script
+source /var/vcap/jobs/ossec-server/helpers/ctl_setup.sh 'ossec-server' 'ossec-authd'
+if [ ! -d /var/vcap/store/ossec-server/bin ]
+then
+  cp -R /var/vcap/packages/ossec-server/. /var/vcap/store/ossec-server/.
+fi
+
+echo <%= p('ossec.authd.password', '') %> >> /var/vcap/store/ossec-server/etc/authd.pass
+
+case $1 in
+
+  start)
+    pid_guard $PIDFILE $JOB_NAME
+
+    # store pid in $PIDFILE
+    echo $$ > $PIDFILE
+
+    exec /var/vcap/packages/ossec-server/bin/ossec-authd -P -g root -f 20 -i \
+         -x /var/vcap/jobs/ossec-server/config/ssl/ssl_cert.pem \
+         -k /var/vcap/jobs/ossec-server/config/ssl/ssl_key.pem \
+         -D /var/vcap/store/ossec-server \
+         >>$LOG_DIR/$JOB_NAME.authd.log 2>&1
+
+    ;;
+
+  stop)
+    kill_and_wait $PIDFILE
+
+    ;;
+  *)
+    echo "Usage: ossec-authd-ctl {start|stop}"
+
+    ;;
+
+esac
+exit 0
