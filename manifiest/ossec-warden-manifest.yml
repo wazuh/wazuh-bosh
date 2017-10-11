@@ -22,10 +22,6 @@ jobs:
   templates:
   - name: ossec-server
     release: ossec
-  - name: forwarder
-    release: ossec
-  - name: node
-    release: ossec 
 - instances: 1
   name: ossec-agent
   networks:
