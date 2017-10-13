@@ -1,6 +1,4 @@
-# BOSH Release for ossec
-
-BOSH Release for [wazuh](http://www.wazuh.com/) which is a fork of [ossec](http://ossec.github.io/) with ELK integration
+# Wazuh - Bosh Release
 
 ## Usage
 
@@ -8,8 +6,8 @@ To use this bosh release, first upload it to your bosh:
 
 ```
 bosh target BOSH_HOST
-git clone https://github.com/cloudfoundry-community/ossec-boshrelease.git
-cd ossec-boshrelease
+git clone https://github.com/wazuh/wazuh-bosh.git
+cd wazuh-bosh
 bosh upload release releases/ossec-1.yml
 ```
 
@@ -75,7 +73,9 @@ By default the version number will be bumped to the next major number. You can s
 bosh create release --final --version 2.1
 ```
 
-## Credits and thank you
+## Credits
 
-This Bosh Release has been authored by Long Nguyen (https://github.com/cloudfoundry-community/ossec-boshrelease) ,Wazuh has forked it with the purpose of maintaining it. Thank you to the authors for the contribution.
+This Bosh Release has been created by Long Nguyen (https://github.com/cloudfoundry-community/ossec-boshrelease).
+
+Wazuh has forked it with the purpose of maintaining it. Thank to the authors for the contribution.
 
