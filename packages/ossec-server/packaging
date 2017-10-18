@@ -15,3 +15,6 @@ pushd wazuh-${VERSION}/src
 make -j${CPUS} OSSEC_USER_MAIL=ossecm OSSEC_USER_REM=ossecr OSSEC_USER=ossec OSSEC_GROUP=ossec PREFIX=/var/vcap/store/ossec-server TARGET=server build
 make OSSEC_USER_MAIL=ossecm OSSEC_USER_REM=ossecr OSSEC_USER=ossec OSSEC_GROUP=ossec PREFIX=${BOSH_INSTALL_TARGET} TARGET=server install
 popd
+pushd wazuh-${VERSION}
+./gen_ossec.sh init manager  > ${BOSH_INSTALL_TARGET}/etc/ossec-init.conf
+popd
