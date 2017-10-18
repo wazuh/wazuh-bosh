@@ -17,7 +17,7 @@ jobs:
       release: logsearch
     - name: ossec-server
       release: ossec
-    - name: forwarder
+    - name: wazuh-api
       release: ossec
     instances: 1
     persistent_disk: 8192

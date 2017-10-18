@@ -12,6 +12,6 @@ VERSION=2.1.1
 
 tar xzvf wazuh/wazuh-${VERSION}.tar.gz
 pushd wazuh-${VERSION}/src
-make -j${CPUS} OSSEC_USER_MAIL=vcap OSSEC_USER_REM=vcap OSSEC_USER=vcap OSSEC_GROUP=vcap PREFIX=/var/vcap/store/ossec-server TARGET=server build
-make OSSEC_USER_MAIL=vcap OSSEC_USER_REM=vcap OSSEC_USER=vcap OSSEC_GROUP=vcap PREFIX=${BOSH_INSTALL_TARGET} TARGET=server install
+make -j${CPUS} OSSEC_USER_MAIL=ossecm OSSEC_USER_REM=ossecr OSSEC_USER=ossec OSSEC_GROUP=ossec PREFIX=/var/vcap/store/ossec-server TARGET=server build
+make OSSEC_USER_MAIL=ossecm OSSEC_USER_REM=ossecr OSSEC_USER=ossec OSSEC_GROUP=ossec PREFIX=${BOSH_INSTALL_TARGET} TARGET=server install
 popd

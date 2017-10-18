@@ -1,0 +1,5 @@
+check process forwarder
+  with pidfile /var/vcap/sys/run/forwarder/forwarder.pid
+  start program "/var/vcap/jobs/forwarder/bin/monit_debugger forwarder_ctl '/var/vcap/jobs/forwarder/bin/ctl start'"
+  stop program "/var/vcap/jobs/forwarder/bin/monit_debugger forwarder_ctl '/var/vcap/jobs/forwarder/bin/ctl stop'"
+  group vcap

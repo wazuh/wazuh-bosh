@@ -4,4 +4,4 @@ tar -xJf ${BOSH_COMPILE_TARGET}/node/node-v6.11.4-linux-x64.tar.xz
 
 mkdir -p ${BOSH_INSTALL_TARGET}/node
 
-cp -a ${BOSH_COMPILE_TARGET}/node-v6.11.4-linux-x64/* ${BOSH_INSTALL_TARGET}/jdk
+cp -a ${BOSH_COMPILE_TARGET}/node-v6.11.4-linux-x64/* ${BOSH_INSTALL_TARGET}/node

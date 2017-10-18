@@ -5,6 +5,7 @@ compilation:
   reuse_compilation_vms: true
   workers: 6
 director_uuid: 09ddea85-e2ed-49aa-aba1-67d6930d37d1
+
 jobs:
 - instances: 1
   name: ossec-server
@@ -21,9 +22,9 @@ jobs:
   resource_pool: small_z1
   templates:
   - name: ossec-server
-    release: ossec
+    release: wazuh
   - name: wazuh-api
-    release: ossec
+    release: wazuh
 - instances: 1
   name: ossec-agent
   networks:
@@ -32,7 +33,7 @@ jobs:
   resource_pool: small_z1
   templates:
   - name: ossec-agent
-    release: ossec
+    release: wazuh
 name: ossec-warden
 networks:
 - name: ossec1
@@ -115,7 +116,7 @@ properties:
         sXjxkw+Xv9tRTeyjPB/T8Dy3ciPeqJ2ZV0HSN0jieMDj4S8jWAj7edI=
         -----END RSA PRIVATE KEY-----
 releases:
-- name: ossec
+- name: wazuh
   version: latest
 resource_pools:
 - cloud_properties:
@@ -131,6 +132,3 @@ update:
   max_in_flight: 50
   serial: true
   update_watch_time: 1000-30000
-
-
-
