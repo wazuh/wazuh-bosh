@@ -72,6 +72,9 @@ By default the version number will be bumped to the next major number. You can s
 ```
 bosh create release --final --version 2.1
 ```
+## Manifiest
+
+The script to generate manifests based on logsearch scripts https://github.com/cloudfoundry-community/logsearch-boshrelease/
 
 ## Credits
 
