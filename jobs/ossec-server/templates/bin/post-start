@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+chown -Rf ossec:ossec /var/vcap/store/ossec-server/logs

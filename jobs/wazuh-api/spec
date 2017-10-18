@@ -2,11 +2,11 @@
 name: wazuh-api
 
 templates:
-  bin/ctl.sh: bin/ctl.sh  
+  bin/wazuh-api-ctl: bin/wazuh-api-ctl
 
 packages:
-- wazuh-api
 - nodejs
+- wazuh-api
 
 properties:
   ossec.authd.password:

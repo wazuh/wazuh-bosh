@@ -13,3 +13,4 @@ npm install --production
 mkdir -pm 700 framework/lib
 gcc -pipe -O2 -shared -fPIC -o framework/lib/libsqlite3.so.0 framework/database/sqlite3.c
 popd
+
