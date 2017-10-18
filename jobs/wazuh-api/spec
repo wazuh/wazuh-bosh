@@ -3,7 +3,6 @@ name: wazuh-api
 
 templates:
   bin/wazuh-api-ctl: bin/wazuh-api-ctl
-
 packages:
 - nodejs
 - wazuh-api

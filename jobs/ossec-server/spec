@@ -5,6 +5,7 @@ packages:
 templates:
   bin/pre-start: bin/pre-start
   bin/post-start: bin/post-start
+  bin/post-deploy: bin/post-deploy
   bin/ossec-maild-ctl: bin/ossec-maild-ctl
   bin/ossec-authd-ctl: bin/ossec-authd-ctl
   bin/ossec-execd-ctl: bin/ossec-execd-ctl
