@@ -15,10 +15,10 @@ WAZUH_VERSION=wazuh-server-3.0.0
 
 if [ ! -f $PACKAGE_DIR/$WAZUH_VERSION/bin/ossec-control ]; then
     cp $JOB_DIR/config/preloaded-vars.conf ${PACKAGE_DIR}/${WAZUH_VERSION}/source_code/etc/preloaded-vars.conf
-    cp $JOB_DIR/config/sslmanager.cert $JOB_DIR/config/sslmanager.key ${PACKAGE_DIR}/${WAZUH_VERSION}/source_code/etc/
     export USER_DIR=${PACKAGE_DIR}/${WAZUH_VERSION}
     cd ${USER_DIR}/source_code
     ./install.sh
+    cp $JOB_DIR/config/sslmanager.cert $JOB_DIR/config/sslmanager.key ${PACKAGE_DIR}/${WAZUH_VERSION}/etc/
 fi
 
 case $2 in
