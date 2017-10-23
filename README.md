@@ -1,84 +1,53 @@
-# Wazuh - Bosh Release
+## Prepare release
 
-## Usage
-
-To use this bosh release, first upload it to your bosh:
+**Clone repository**
 
 ```
-bosh target BOSH_HOST
-git clone https://github.com/wazuh/wazuh-bosh.git
-cd wazuh-bosh
-bosh upload release releases/ossec-1.yml
+git clone https://github.com/wazuh/wazuh-bosh
 ```
 
-For [bosh-lite](https://github.com/cloudfoundry/bosh-lite), you can quickly create a deployment manifest & deploy a cluster:
+
+**Download Wazuh source code**
 
 ```
-templates/make_manifest warden
-bosh -n deploy
+mkdir /tmp/blobs
+curl -o /tmp/blobs/wazuh-server-3.0.0.tar.gz -L "https://github.com/wazuh/wazuh/archive/3.0.tar.gz"
 ```
 
-For AWS EC2, create a single VM:
+**Add blobs**
 
 ```
-templates/make_manifest aws-ec2
-bosh -n deploy
+bosh add-blob /tmp/blobs/wazuh-server-3.0.0.tar.gz wazuh-server/wazuh-server-3.0.0.tar.gz
 ```
 
-### Override security groups
+**Upload blob to S3**
 
-For AWS & Openstack, the default deployment assumes there is a `default` security group. If you wish to use a different security group(s) then you can pass in additional configuration when running `make_manifest` above.
-
-Create a file `my-networking.yml`:
-
-``` yaml
----
-networks:
-  - name: ossec1
-    type: dynamic
-    cloud_properties:
-      security_groups:
-        - ossec
+If you have configured an external S3 bucket to store blobs, you can upload the blob just created to the store.
+```
+bosh upload-blobs
 ```
 
-Where `- ossec` means you wish to use an existing security group called `ossec`.
-
-You now suffix this file path to the `make_manifest` command:
-
+**Create release**
 ```
-templates/make_manifest openstack-nova my-networking.yml
-bosh -n deploy
+bosh create-release --final --version=3.0.0
 ```
 
-### Development
-
-As a developer of this release, create new releases and upload them:
+**Upload release**
 
 ```
-bosh create release --force && bosh -n upload release
+bosh -e your_bosh_environment upload-release
 ```
 
-### Final releases
+## Deploy
+Configure manifest/wazuh.yml according to the number of instances you want to create.
 
-To share final releases:
-
+**Start the deployment**
 ```
-bosh create release --final
+bosh -e bosh-1 -d wazuh deploy manifiest/wazuh.yml
 ```
 
-By default the version number will be bumped to the next major number. You can specify alternate versions:
 
+## Reference
 
-```
-bosh create release --final --version 2.1
-```
-## Manifiest
-
-The script to generate manifests based on logsearch scripts https://github.com/cloudfoundry-community/logsearch-boshrelease/
-
-## Credits
-
-This Bosh Release has been created by Long Nguyen (https://github.com/cloudfoundry-community/ossec-boshrelease).
-
-Wazuh has forked it with the purpose of maintaining it. Thank to the authors for the contribution.
-
+- Configure AWS Environment - Official (https://bosh.io/docs/init-aws.html)
+- Configure AWS Environment - Alternative - Vars files (http://www.starkandwayne.com/blog/bootstrap-bosh-2-0-on-aws/)
