@@ -1,19 +1,13 @@
-check process ossec-execd
-  with pidfile /var/vcap/sys/run/wazuh-server/ossec-execd.pid
-  start program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-execd start"
-  stop program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-execd stop"
-  group vcap
-
 check process ossec-analysisd
   with pidfile /var/vcap/sys/run/wazuh-server/ossec-analysisd.pid
   start program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-analysisd start"
   stop program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-analysisd stop"
   group vcap
 
-check process ossec-logcollector
-  with pidfile /var/vcap/sys/run/wazuh-server/ossec-logcollector.pid
-  start program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-logcollector start"
-  stop program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-logcollector stop"
+check process ossec-execd
+  with pidfile /var/vcap/sys/run/wazuh-server/ossec-execd.pid
+  start program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-execd start"
+  stop program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-execd stop"
   group vcap
 
 check process ossec-remoted
@@ -21,6 +15,14 @@ check process ossec-remoted
   start program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-remoted start"
   stop program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-remoted stop"
   group vcap
+
+
+check process ossec-logcollector
+  with pidfile /var/vcap/sys/run/wazuh-server/ossec-logcollector.pid
+  start program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-logcollector start"
+  stop program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-logcollector stop"
+  group vcap
+
 
 check process ossec-syscheckd
   with pidfile /var/vcap/sys/run/wazuh-server/ossec-syscheckd.pid
@@ -32,6 +34,12 @@ check process ossec-monitord
   with pidfile /var/vcap/sys/run/wazuh-server/ossec-monitord.pid
   start program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-monitord start"
   stop program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-monitord stop"
+  group vcap
+
+check process wazuh-modulesd
+  with pidfile /var/vcap/sys/run/wazuh-server/wazuh-modulesd.pid
+  start program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl wazuh-modulesd start"
+  stop program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl wazuh-modulesd stop"
   group vcap
 
 check process ossec-authd

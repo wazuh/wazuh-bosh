@@ -3,7 +3,7 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
-JOB_NAME=wazuh_server
+JOB_NAME=wazuh-server
 JOB_DIR=/var/vcap/jobs/$JOB_NAME
 PACKAGE_DIR=/var/vcap/packages/wazuh-server
 STORE_DIR=/var/vcap/store/$JOB_NAME
@@ -14,9 +14,10 @@ PIDFILE=${RUN_DIR}/${1}.pid
 WAZUH_VERSION=wazuh-server-3.0.0
 
 if [ ! -f $PACKAGE_DIR/$WAZUH_VERSION/bin/ossec-control ]; then
-    cp $JOB_DIR/etc/preloaded-vars.conf ${PACKAGE_DIR}/WAZUH_VERSION/etc/preloaded-vars.conf
+    cp $JOB_DIR/config/preloaded-vars.conf ${PACKAGE_DIR}/${WAZUH_VERSION}/source_code/etc/preloaded-vars.conf
+    cp $JOB_DIR/config/sslmanager.cert $JOB_DIR/config/sslmanager.key ${PACKAGE_DIR}/${WAZUH_VERSION}/source_code/etc/
     export USER_DIR=${PACKAGE_DIR}/${WAZUH_VERSION}
-    cd ${USER_DIR}
+    cd ${USER_DIR}/source_code
     ./install.sh
 fi
 
@@ -26,12 +27,30 @@ case $2 in
     mkdir -p $RUN_DIR
     mkdir -p $LOG_DIR
     mkdir -p $STORE_DIR
+	case $1 in
+		"ossec-authd")
+			echo $$ > $PIDFILE
+			exec ${PACKAGE_DIR}/${WAZUH_VERSION}/bin/$1 -f -d \
+					-x ${PACKAGE_DIR}/${WAZUH_VERSION}/etc/sslmanager.cert \
+					-k ${PACKAGE_DIR}/${WAZUH_VERSION}/etc/sslmanager.key \
+				 >>${LOG_DIR}/${JOB_NAME}_${1}.stdout.log \
+				 2>>${LOG_DIR}/${JOB_NAME}_${1}.stderr.log
+		;;
+		"wazuh-modulesd")
+			echo $$ > $PIDFILE
+			exec ${PACKAGE_DIR}/${WAZUH_VERSION}/bin/$1 -f -d \
+				 >>${LOG_DIR}/${JOB_NAME}_${1}.stdout.log \
+				 2>>${LOG_DIR}/${JOB_NAME}_${1}.stderr.log
+		;;
+		*)
+			echo $$ > $PIDFILE
+			exec ${PACKAGE_DIR}/${WAZUH_VERSION}/bin/$1 -f -d \
+					-c ${PACKAGE_DIR}/${WAZUH_VERSION}/etc/ossec.conf \
+				 >>${LOG_DIR}/${JOB_NAME}_${1}.stdout.log \
+				 2>>${LOG_DIR}/${JOB_NAME}_${1}.stderr.log
+		;;
+		esac
 
-    echo $$ > $PIDFILE
-    exec ${PACKAGE_DIR}/${WAZUH_VERSION}/bin/$1 -f -d \
-            -c ${JOB_DIR}/etc/ossec-server.conf \
-         >>${LOG_DIR}/${JOB_NAME}_${1}.stdout.log \
-         2>>${LOG_DIR}/${JOB_NAME}_${1}.stderr.log
     ;;
 
 
@@ -41,7 +60,7 @@ case $2 in
 
     ;;
   *)
-    echo "Usage: wazuh_server_ctl {start|stop}"
+    echo "Usage: wazuh_server_ctl {ossec-daemon}{start|stop}"
 
     ;;
 
