@@ -2,7 +2,6 @@
 
 hostname <%= spec.name %>-<%= spec.id %>
 addgroup --system ossec
-APPGROUP=`grep "test2" /etc/group|cut -d: -f3`
 adduser --system --home/var/vcap/store/ossec-server --shell /sbin/nologin 
 adduser --system --home /var/vcap/store/ossec-server --shell /sbin/nologin --ingroup ossec ossec
 adduser --system --home /var/vcap/store/ossec-server --shell /sbin/nologin --ingroup ossec ossecm

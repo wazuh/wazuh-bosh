@@ -3,18 +3,38 @@ set -u # report the usage of uninitialized variables
 
 # Detect # of CPUs so make jobs can be parallelized
 CPUS=$(grep -c ^processor /proc/cpuinfo)
- # Available variables
+# Available variables
 # $BOSH_COMPILE_TARGET - where this package & spec'd source files are available
 # $BOSH_INSTALL_TARGET - where you copy/install files to be included in package
 export HOME=/var/vcap
 
-VERSION=3.0
+VERSION=3.0.0
+VERSION_TAR=3.0
 
-tar xzvf wazuh/wazuh-${VERSION}.tar.gz
-pushd wazuh-${VERSION}/src
-make -j${CPUS} OSSEC_USER_MAIL=ossecm OSSEC_USER_REM=ossecr OSSEC_USER=ossec OSSEC_GROUP=ossec PREFIX=/var/vcap/store/ossec-server TARGET=server build
-make OSSEC_USER_MAIL=ossecm OSSEC_USER_REM=ossecr OSSEC_USER=ossec OSSEC_GROUP=ossec PREFIX=${BOSH_INSTALL_TARGET} TARGET=server install
+tar xzvf wazuh-server/wazuh-server-${VERSION}.tar.gz
+
+# Prepare unattended installation
+echo '
+USER_NO_STOP="n"
+USER_LANGUAGE="en"
+USER_INSTALL_TYPE="server"
+USER_DELETE_DIR="y"
+USER_DIR="/var/vcap/store/wazuh-server"
+USER_ENABLE_EMAIL="n"
+USER_ENABLE_ACTIVE_RESPONSE="n"
+USER_ENABLE_SYSCHECK="y"
+USER_ENABLE_ROOTCHECK="y"
+USER_ENABLE_OPENSCAP="n"
+USER_ENABLE_SYSLOG="n"
+USER_WHITE_LIST="192.168.2.1 192.168.1.0/24"
+' > wazuh-${VERSION_TAR}/etc/preloaded-vars.conf
+
+# Compile
+pushd wazuh-${VERSION_TAR}/src
+make -j${CPUS} PREFIX=/var/vcap/store/wazuh-server TARGET=server
 popd
-pushd wazuh-${VERSION}
-./gen_ossec.sh init manager  > ${BOSH_INSTALL_TARGET}/etc/ossec-init.conf
+
+# Install
+pushd wazuh-${VERSION_TAR}
+./install.sh
 popd

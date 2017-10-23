@@ -2,9 +2,9 @@
 
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
-chown -Rf ossec:ossec /var/vcap/store/ossec-server/logs
+chown -Rf ossec:ossec /var/vcap/store/wazuh-server/logs
 # Setup env vars and folders for the webapp_ctl script
-source /var/vcap/jobs/ossec-server/helpers/ctl_setup.sh 'ossec-server' 'ossec-maild'
+source /var/vcap/jobs/wazuh-server/helpers/ctl_setup.sh 'wazuh-server' 'ossec-maild'
 
 case $1 in
 
@@ -14,10 +14,10 @@ case $1 in
     # store pid in $PIDFILE
     echo $$ > $PIDFILE
 
-    exec /var/vcap/packages/ossec-server/bin/ossec-maild -f \
+    exec /var/vcap/store/wazuh-server/bin/ossec-maild -f \
          -u root -g root \
-         -c /var/vcap/jobs/ossec-server/config/ossec.conf \
-         -D /var/vcap/store/ossec-server \
+         -c /var/vcap/jobs/wazuh-server/config/ossec.conf \
+         -D /var/vcap/store/wazuh-server \
          >>$LOG_DIR/$JOB_NAME.maild.log 2>&1
 
     ;;

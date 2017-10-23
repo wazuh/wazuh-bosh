@@ -4,10 +4,10 @@ set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
 # Setup env vars and folders for the webapp_ctl script
-source /var/vcap/jobs/ossec-server/helpers/ctl_setup.sh 'ossec-server' 'ossec-syscheckd'
-if [ ! -d /var/vcap/store/ossec-server/bin ]
+source /var/vcap/jobs/wazuh-server/helpers/ctl_setup.sh 'wazuh-server' 'ossec-syscheckd'
+if [ ! -d /var/vcap/store/wazuh-server/bin ]
 then
-  cp -R /var/vcap/packages/ossec-server/. /var/vcap/store/ossec-server/.
+  cp -R /var/vcap/packages/wazuh-server/. /var/vcap/store/wazuh-server/.
 fi
 case $1 in
 
@@ -17,8 +17,8 @@ case $1 in
     # store pid in $PIDFILE
     echo $$ > $PIDFILE
 
-    exec /var/vcap/packages/ossec-server/bin/ossec-syscheckd -f \
-         -c /var/vcap/jobs/ossec-server/config/ossec.conf \
+    exec /var/vcap/store/wazuh-server/bin/ossec-syscheckd -f \
+         -c /var/vcap/jobs/wazuh-server/config/ossec.conf \
          >>$LOG_DIR/$JOB_NAME.syscheckd.log 2>&1
 
     ;;
