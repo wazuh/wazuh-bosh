@@ -1,0 +1,19 @@
+name: wazuh
+version: "1"
+commit_hash: 06f4137
+uncommitted_changes: false
+jobs:
+- name: wazuh-server
+  version: d05c6c0969863d37b1c6ad914c94ae95218a2ea9
+  fingerprint: d05c6c0969863d37b1c6ad914c94ae95218a2ea9
+  sha1: ead783d1192794e145014365fc02f850b7ddb7c2
+packages:
+- name: wazuh-server
+  version: bc0d547966cceefb4060037b3288cc2543fa4945
+  fingerprint: bc0d547966cceefb4060037b3288cc2543fa4945
+  sha1: 349aea3fa6cd222c2d0eade6bfb865307b4dd833
+  dependencies: []
+license:
+  version: 05676098ab866f487cd999595307d706f3b574f6
+  fingerprint: 05676098ab866f487cd999595307d706f3b574f6
+  sha1: 45ef9de28cd6be86f8731eb278c66bea492ee6bd
