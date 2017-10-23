@@ -3,4 +3,6 @@ blobstore:
   provider: s3
   options:
     bucket_name: wazuh-bosh
+    access_key_id: AKIAJFDET2DEBEBL36GQ
+    secret_access_key: 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
 final_name: wazuh
