@@ -2,7 +2,7 @@
 
 hostname <%= spec.name %>-<%= spec.id %>
 addgroup --system ossec
-adduser --system --home/var/vcap/store/ossec-server --shell /sbin/nologin 
-adduser --system --home /var/vcap/store/ossec-server --shell /sbin/nologin --ingroup ossec ossec
-adduser --system --home /var/vcap/store/ossec-server --shell /sbin/nologin --ingroup ossec ossecm
-adduser --system --home /var/vcap/store/ossec-server --shell /sbin/nologin --ingroup ossec ossecr
+adduser --system --home/var/vcap/store/wazuh-server --shell /sbin/nologin 
+adduser --system --home /var/vcap/store/wazuh-server --shell /sbin/nologin --ingroup ossec ossec
+adduser --system --home /var/vcap/store/wazuh-server --shell /sbin/nologin --ingroup ossec ossecm
+adduser --system --home /var/vcap/store/wazuh-server --shell /sbin/nologin --ingroup ossec ossecr
