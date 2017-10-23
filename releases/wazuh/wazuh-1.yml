@@ -1,7 +1,7 @@
 name: wazuh
 version: "1"
-commit_hash: 073e45f
-uncommitted_changes: false
+commit_hash: 2eae0bc
+uncommitted_changes: true
 jobs:
 - name: wazuh-server
   version: d05c6c0969863d37b1c6ad914c94ae95218a2ea9
