@@ -1,5 +1,0 @@
-check process wazuh-api
-  with pidfile /var/vcap/sys/run/wazuh-api/wazuh-api.pid
-  start program "/var/vcap/jobs/wazuh-api/bin/wazuh-api-ctl start"
-  stop program "/var/vcap/jobs/wazuh-api/bin/wazuh-api-ctl stop"
-  group vcap

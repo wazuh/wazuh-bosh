@@ -1,7 +1,7 @@
 ---
-name: ossec-server
+name: wazuh-server
 packages:
-- ossec-server
+- wazuh-server
 templates:
   bin/pre-start: bin/pre-start
   bin/post-start: bin/post-start

@@ -1,5 +1,0 @@
----
-name: nodejs
-dependencies: []
-files:
-- node/node-v6.11.4-linux-x64.tar.xz

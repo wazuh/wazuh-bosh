@@ -1,5 +1,0 @@
----
-name: ossec-server
-dependencies: []
-files:
-- wazuh/wazuh-*.tar.gz

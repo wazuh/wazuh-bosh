@@ -1,0 +1,32 @@
+---
+name: wazuh
+
+releases:
+- name: wazuh
+  version: 3.0.0
+  url: git+https://github.com/wazuh/wazuh
+
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: latest
+
+update:
+  canaries: 2
+  max_in_flight: 1
+  canary_watch_time: 5000-60000
+  update_watch_time: 5000-60000
+
+instance_groups:
+- name: wazuh
+  azs: [z1]
+  instances: 1
+  jobs:
+  - name: wazuh-server
+    release: wazuh
+    properties: {}
+  vm_type: default
+  stemcell: default
+  persistent_disk: 10240
+  networks:
+  - name: default

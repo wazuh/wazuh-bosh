@@ -1,5 +1,0 @@
----
-name: ossec-agent
-dependencies: []
-files:
-- wazuh/wazuh-*.tar.gz

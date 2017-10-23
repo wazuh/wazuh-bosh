@@ -1,7 +1,0 @@
----
-name: wazuh-api
-
-dependencies:
-- nodejs
-files:
-- wazuh/wazuh-api-2.1.1.tar.gz
