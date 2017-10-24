@@ -28,7 +28,7 @@ instance_groups:
     provides:
       wazuh_properties: {as: wazuh_properties}
     properties:
-      wazuh_server_ip: 10.0.15.15
+      wazuh_server_ip: 10.0.15.4
   vm_type: default
   stemcell: default
   persistent_disk: 10240
