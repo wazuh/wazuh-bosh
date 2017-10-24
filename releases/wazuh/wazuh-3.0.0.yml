@@ -1,0 +1,28 @@
+name: wazuh
+version: 3.0.0
+commit_hash: c1fead1
+uncommitted_changes: true
+jobs:
+- name: wazuh-agent
+  version: 0b74cbe2b8a3e40df26cc32fa053d9b83bf4cbf1
+  fingerprint: 0b74cbe2b8a3e40df26cc32fa053d9b83bf4cbf1
+  sha1: a1ec5b42e1428915177d7a433588c88ed41ec40c
+- name: wazuh-server
+  version: 8a63de4bc68e7f7388565f484369bbba5029f5ac
+  fingerprint: 8a63de4bc68e7f7388565f484369bbba5029f5ac
+  sha1: f044f243fa4805c9eaae4e47c82567e4caf6471a
+packages:
+- name: wazuh-agent
+  version: 943533601b8efe7e18f5f91a02244da3ee61cd42
+  fingerprint: 943533601b8efe7e18f5f91a02244da3ee61cd42
+  sha1: 1e0edc5c6663e9dda235b245dc66c3dcea2f8b36
+  dependencies: []
+- name: wazuh-server
+  version: 631f19760c5ab47117cb4055f4acba225f32c083
+  fingerprint: 631f19760c5ab47117cb4055f4acba225f32c083
+  sha1: 6c7887ad5bfd74653cca1c5eb900486d6f5d4fdd
+  dependencies: []
+license:
+  version: b0a6c589bfa8a6fa595bfc43b16306e8af49ee22
+  fingerprint: b0a6c589bfa8a6fa595bfc43b16306e8af49ee22
+  sha1: 9a9def94e6fe5505952f17b86feb10e3b3a482e5

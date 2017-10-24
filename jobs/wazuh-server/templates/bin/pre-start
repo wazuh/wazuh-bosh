@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+JOB_NAME=wazuh-server
+JOB_DIR=/var/vcap/jobs/$JOB_NAME
+PACKAGE_DIR=/var/vcap/packages/wazuh-server
+WAZUH_VERSION=wazuh-server-3.0.0
+
+if [ ! -f $PACKAGE_DIR/$WAZUH_VERSION/bin/ossec-control ]; then
+    cp $JOB_DIR/config/preloaded-vars.conf ${PACKAGE_DIR}/${WAZUH_VERSION}/source_code/etc/preloaded-vars.conf
+    export USER_DIR=${PACKAGE_DIR}/${WAZUH_VERSION}
+    cd ${USER_DIR}/source_code
+    ./install.sh
+    cp $JOB_DIR/config/sslmanager.cert $JOB_DIR/config/sslmanager.key ${PACKAGE_DIR}/${WAZUH_VERSION}/etc/
+fi
+
+exit 0

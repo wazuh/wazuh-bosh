@@ -1,20 +1,19 @@
 ---
 name: wazuh-server
+
 packages:
 - wazuh-server
+
 templates:
+  bin/pre-start: bin/pre-start
   bin/wazuh_server_ctl: bin/wazuh_server_ctl
   config/ossec.conf.erb: config/ossec.conf
   config/sslmanager.cert: config/sslmanager.cert
   config/sslmanager.key: config/sslmanager.key
   config/preloaded-vars.conf: config/preloaded-vars.conf
-  data/properties.sh.erb: data/properties.sh
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
-properties:
-  ossec.authd.password:
-    description: "password for authd for agents to use"
-  ossec.authd.ssl_cert:
-    description: "ssl cert for authd"
-  ossec.authd.ssl_key:
-    description: "ssl key for authd"
+  
+provides:
+- name: wazuh_manager_conn
+  type: conn  

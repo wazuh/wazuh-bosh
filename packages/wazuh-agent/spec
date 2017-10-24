@@ -1,0 +1,5 @@
+---
+name: wazuh-agent
+dependencies: []
+files:
+- wazuh-agent/wazuh-agent-3.0.0.tar.gz # https://github.com/wazuh/wazuh/archive/3.0.zip

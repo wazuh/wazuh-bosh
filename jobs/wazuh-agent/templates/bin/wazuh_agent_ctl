@@ -3,13 +3,13 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
-JOB_NAME=wazuh-server
-PACKAGE_DIR=/var/vcap/packages/wazuh-server
+JOB_NAME=wazuh-agent
+PACKAGE_DIR=/var/vcap/packages/wazuh-agent
 STORE_DIR=/var/vcap/store/$JOB_NAME
 RUN_DIR=/var/vcap/sys/run/$JOB_NAME
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 PIDFILE=${RUN_DIR}/${1}.pid
-WAZUH_VERSION=wazuh-server-3.0.0
+WAZUH_VERSION=wazuh-agent-3.0.0
 
 
 case $2 in
@@ -19,14 +19,6 @@ case $2 in
     mkdir -p $LOG_DIR
     mkdir -p $STORE_DIR
 	case $1 in
-		"ossec-authd")
-			echo $$ > $PIDFILE
-			exec ${PACKAGE_DIR}/${WAZUH_VERSION}/bin/$1 -f -d \
-					-x ${PACKAGE_DIR}/${WAZUH_VERSION}/etc/sslmanager.cert \
-					-k ${PACKAGE_DIR}/${WAZUH_VERSION}/etc/sslmanager.key \
-				 >>${LOG_DIR}/${JOB_NAME}_${1}.stdout.log \
-				 2>>${LOG_DIR}/${JOB_NAME}_${1}.stderr.log
-		;;
 		"wazuh-modulesd")
 			echo $$ > $PIDFILE
 			exec ${PACKAGE_DIR}/${WAZUH_VERSION}/bin/$1 -f -d \
@@ -51,7 +43,7 @@ case $2 in
 
     ;;
   *)
-    echo "Usage: wazuh_server_ctl {ossec-daemon}{start|stop}"
+    echo "Usage: wazuh_agent_ctl {ossec-daemon}{start|stop}"
 
     ;;
 

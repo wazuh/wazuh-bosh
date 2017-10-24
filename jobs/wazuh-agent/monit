@@ -1,0 +1,24 @@
+check process ossec-execd
+  with pidfile /var/vcap/sys/run/wazuh-agent/ossec-execd.pid
+  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-execd start"
+  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-execd stop"
+  group vcap
+
+check process ossec-agentd
+  matching "ossec-agentd"
+  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-agentd start"
+  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-agentd stop"
+  group vcap
+
+check process ossec-logcollector
+  with pidfile /var/vcap/sys/run/wazuh-agent/ossec-logcollector.pid
+  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-logcollector start"
+  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-logcollector stop"
+  group vcap
+
+
+check process ossec-syscheckd
+  with pidfile /var/vcap/sys/run/wazuh-agent/ossec-syscheckd.pid
+  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-syscheckd start"
+  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-syscheckd stop"
+  group vcap

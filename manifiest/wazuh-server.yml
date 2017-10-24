@@ -1,10 +1,10 @@
 ---
-name: wazuh
+name: wazuh-server
 
 releases:
 - name: wazuh
   version: 3.0.0
-  url: git+https://github.com/wazuh/wazuh
+  url: git+https://github.com/wazuh/wazuh-bosh
 
 stemcells:
 - alias: default
@@ -18,7 +18,7 @@ update:
   update_watch_time: 5000-60000
 
 instance_groups:
-- name: wazuh
+- name: wazuh-server
   azs: [z1]
   instances: 1
   jobs:

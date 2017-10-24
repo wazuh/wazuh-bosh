@@ -1,0 +1,11 @@
+---
+name: wazuh-agent
+packages:
+- wazuh-agent
+templates:
+  bin/pre-start.erb: bin/pre-start
+  bin/wazuh_agent_ctl: bin/wazuh_agent_ctl
+  config/ossec.conf.erb: config/ossec.conf
+  config/preloaded-vars.conf.erb: config/preloaded-vars.conf
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
