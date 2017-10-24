@@ -13,7 +13,3 @@ templates:
   config/preloaded-vars.conf: config/preloaded-vars.conf
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
-  
-provides:
-- name: wazuh_manager_conn
-  type: conn  

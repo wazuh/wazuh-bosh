@@ -23,8 +23,12 @@ instance_groups:
   jobs:
   - name: wazuh-agent
     release: wazuh
+    consumes:
+      wazuh_properties: {from: wazuh_properties}
+    provides:
+      wazuh_properties: {as: wazuh_properties}
     properties:
-      wazuh.server_ip: 10.0.15.4
+      wazuh_server_ip: 10.0.15.15
   vm_type: default
   stemcell: default
   persistent_disk: 10240

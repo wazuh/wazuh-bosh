@@ -1,7 +1,9 @@
 ---
 name: wazuh-agent
+
 packages:
 - wazuh-agent
+
 templates:
   bin/pre-start.erb: bin/pre-start
   bin/wazuh_agent_ctl: bin/wazuh_agent_ctl
@@ -9,3 +11,17 @@ templates:
   config/preloaded-vars.conf.erb: config/preloaded-vars.conf
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
+
+provides:
+- name: wazuh_properties
+  type: db  
+  properties:
+  - wazuh_server_ip
+  
+consumes:
+- name: wazuh_properties
+  type: db
+    
+properties:
+  wazuh_server_ip:
+    description: "Wazuh Manager IP"  

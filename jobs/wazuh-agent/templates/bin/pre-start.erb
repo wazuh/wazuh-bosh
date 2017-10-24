@@ -16,7 +16,7 @@ if [ ! -f $PACKAGE_DIR/$WAZUH_VERSION/bin/ossec-control ]; then
 fi
 
 if [ ! -s $PACKAGE_DIR/$WAZUH_VERSION/etc/client.keys ]; then
-    $PACKAGE_DIR/$WAZUH_VERSION/bin/agent-auth -m <%= properties.wazuh.server_ip %> -g root
+    $PACKAGE_DIR/$WAZUH_VERSION/bin/agent-auth -g root -m <%= link('wazuh_properties').p("wazuh_server_ip") %>
 fi
 
 exit 0

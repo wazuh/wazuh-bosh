@@ -4,7 +4,6 @@ name: wazuh-server
 releases:
 - name: wazuh
   version: 3.0.0
-  url: git+https://github.com/wazuh/wazuh-bosh
 
 stemcells:
 - alias: default
@@ -24,7 +23,6 @@ instance_groups:
   jobs:
   - name: wazuh-server
     release: wazuh
-    properties: {}
   vm_type: default
   stemcell: default
   persistent_disk: 10240
