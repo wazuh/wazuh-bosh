@@ -13,3 +13,9 @@ templates:
   config/preloaded-vars.conf: config/preloaded-vars.conf
   helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
+
+properties:
+  sslmanager_key:
+    description: SSL manager private key
+  sslmanager_cert:
+    description: SSL manager certificate
