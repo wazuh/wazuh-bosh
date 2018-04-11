@@ -25,7 +25,7 @@ curl -o /tmp/blobs/wazuh-3.0.0.tar.gz -L "https://github.com/wazuh/wazuh/archive
 
 ```
 bosh add-blob /tmp/blobs/wazuh-3.0.0.tar.gz wazuh-server/wazuh-server-3.0.0.tar.gz
-bosh add-blob /tmp/blobs/wazuh-3.0.0.tar.gz wazuh-server/wazuh-agent-3.0.0.tar.gz
+bosh add-blob /tmp/blobs/wazuh-3.0.0.tar.gz wazuh-agent/wazuh-agent-3.0.0.tar.gz
 ```
 
 **Upload blob to S3**
