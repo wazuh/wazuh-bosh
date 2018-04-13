@@ -6,10 +6,9 @@ set -u # report the usage of uninitialized variables
 JOB_NAME=wazuh-agent
 PACKAGE_DIR=/var/vcap/packages/wazuh-agent
 STORE_DIR=/var/vcap/store/$JOB_NAME
-RUN_DIR=/var/vcap/sys/run/$JOB_NAME
+RUN_DIR=${PACKAGE_DIR}/var/run
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
-PIDFILE=${RUN_DIR}/${1}.pid
-WAZUH_VERSION=wazuh-agent-3.0.0
+PIDFILE=${RUN_DIR}/${1}-*.pid
 
 
 case $2 in
@@ -18,27 +17,13 @@ case $2 in
     mkdir -p $RUN_DIR
     mkdir -p $LOG_DIR
     mkdir -p $STORE_DIR
-	case $1 in
-		"wazuh-modulesd")
-			echo $$ > $PIDFILE
-			exec ${PACKAGE_DIR}/${WAZUH_VERSION}/bin/$1 -f -d \
-				 >>${LOG_DIR}/${JOB_NAME}_${1}.stdout.log \
-				 2>>${LOG_DIR}/${JOB_NAME}_${1}.stderr.log
-		;;
-		*)
-			echo $$ > $PIDFILE
-			exec ${PACKAGE_DIR}/${WAZUH_VERSION}/bin/$1 -f -d \
-					-c ${PACKAGE_DIR}/${WAZUH_VERSION}/etc/ossec.conf \
-				 >>${LOG_DIR}/${JOB_NAME}_${1}.stdout.log \
-				 2>>${LOG_DIR}/${JOB_NAME}_${1}.stderr.log
-		;;
-		esac
+    exec ${PACKAGE_DIR}/bin/$1
 
     ;;
 
 
   stop)
-    kill -9 $PIDFILE
+    kill -9 `cat $PIDFILE`
     rm -rf $PIDFILE
 
     ;;

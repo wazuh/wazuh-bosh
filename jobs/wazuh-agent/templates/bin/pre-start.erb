@@ -6,17 +6,39 @@ set -u # report the usage of uninitialized variables
 JOB_NAME=wazuh-agent
 JOB_DIR=/var/vcap/jobs/$JOB_NAME
 PACKAGE_DIR=/var/vcap/packages/wazuh-agent
-WAZUH_VERSION=wazuh-agent-3.0.0
+LOG_DIR=/var/vcap/sys/log/$JOB_NAME
+DATA_DIR=/var/vcap/data/wazuh-agent
+TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
 
-if [ ! -f $PACKAGE_DIR/$WAZUH_VERSION/bin/ossec-control ]; then
-    cp $JOB_DIR/config/preloaded-vars.conf ${PACKAGE_DIR}/${WAZUH_VERSION}/source_code/etc/preloaded-vars.conf
-    export USER_DIR=${PACKAGE_DIR}/${WAZUH_VERSION}
-    cd ${USER_DIR}/source_code
-    ./install.sh
+mkdir -p ${DATA_DIR}/etc
+rm -f /etc/ossec-init.conf
+
+cp ${JOB_DIR}/config/preloaded-vars.conf ${PACKAGE_DIR}/source_code/etc/preloaded-vars.conf
+cd ${PACKAGE_DIR}/source_code
+./install.sh
+cp ${JOB_DIR}/config/ossec.conf ${PACKAGE_DIR}/etc/
+cp ${JOB_DIR}/config/local_internal_options.conf ${PACKAGE_DIR}/etc/
+
+if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
+    ln -s ${PACKAGE_DIR}/logs/ ${LOG_DIR}/wazuh_logs
 fi
 
-if [ ! -s $PACKAGE_DIR/$WAZUH_VERSION/etc/client.keys ]; then
-    $PACKAGE_DIR/$WAZUH_VERSION/bin/agent-auth -g root -m <%= link('wazuh_properties').p("wazuh_server_ip") %>
+if [ ! -s ${DATA_DIR}/etc/client.keys ]; then
+    if ${PACKAGE_DIR}/bin/agent-auth -g root -m <%= p("wazuh_server_registration_address") %> -A <%= p("wazuh_agents_prefix") %>`hostname`
+    then
+      cp ${PACKAGE_DIR}/etc/client.keys ${DATA_DIR}/etc/
+      echo "$TIMESTAMP : INFO : Registration success" >> ${LOG_DIR}/setup.log  
+    else
+      cp ${JOB_DIR}/config/client.keys.sample ${PACKAGE_DIR}/etc/client.keys
+      echo "$TIMESTAMP : ERROR : Registration failure" >> ${LOG_DIR}/setup.log
+    fi
+    
+else
+    cp ${DATA_DIR}/etc/client.keys ${PACKAGE_DIR}/etc/
+    echo "$TIMESTAMP : INFO : Agent was already registered" >> ${LOG_DIR}/setup.log
 fi
+
+# Start registration daemons
+$JOB_DIR/bin/registration.sh & 
 
 exit 0

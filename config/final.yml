@@ -1,6 +1,7 @@
 ---
 blobstore:
-  provider: s3
+  provider: local
   options:
-    bucket_name: wazuh-blobs
+    blobstore_path: /tmp/blobs/
 final_name: wazuh
+

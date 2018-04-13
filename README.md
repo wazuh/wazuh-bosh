@@ -1,10 +1,5 @@
 # Wazuh for Bosh
 
-[![Slack](https://img.shields.io/badge/slack-join-blue.svg)](https://goo.gl/forms/M2AoZC4b2R9A9Zy12)
-[![Email](https://img.shields.io/badge/email-join-blue.svg)](https://groups.google.com/forum/#!forum/wazuh)
-[![Documentation](https://img.shields.io/badge/docs-view-green.svg)](https://documentation.wazuh.com)
-[![Documentation](https://img.shields.io/badge/web-view-green.svg)](https://wazuh.com)
-
 ## Prepare release
 
 **Clone repository**
@@ -18,14 +13,14 @@ git clone https://github.com/wazuh/wazuh-bosh
 
 ```
 mkdir /tmp/blobs
-curl -o /tmp/blobs/wazuh-3.0.0.tar.gz -L "https://github.com/wazuh/wazuh/archive/3.0.tar.gz"
+curl -o /tmp/blobs/wazuh-3.2.1.tar.gz -L "https://github.com/wazuh/wazuh/archive/v3.2.1.tar.gz"
 ```
 
 **Add blobs**
 
 ```
-bosh add-blob /tmp/blobs/wazuh-3.0.0.tar.gz wazuh-server/wazuh-server-3.0.0.tar.gz
-bosh add-blob /tmp/blobs/wazuh-3.0.0.tar.gz wazuh-agent/wazuh-agent-3.0.0.tar.gz
+bosh add-blob /tmp/blobs/wazuh-3.2.1.tar.gz wazuh-server/wazuh-server-3.2.1.tar.gz
+bosh add-blob /tmp/blobs/wazuh-3.2.1.tar.gz wazuh-agent/wazuh-agent-3.2.1.tar.gz
 ```
 
 **Upload blob to S3**
@@ -39,7 +34,7 @@ bosh upload-blobs
 **Create release**
 
 ```
-bosh create-release --final --version=3.0.0
+bosh create-release --final --version=3.2.1
 ```
 
 **Upload release**
@@ -53,14 +48,14 @@ Configure manifest/wazuh-server.yml according to the number of instances you wan
 
 **Deploy**
 ```
-bosh -e your_bosh_environment -d wazuh-server deploy manifiest/wazuh-server.yml
+bosh -e your_bosh_environment -d wazuh-server deploy manifest/wazuh-server.yml
 ```
 
 ## Deploy Wazuh Agents
 Configure manifest/wazuh-agent.yml according to the number of agents you want to deploy.
-Modify manifest property ```wazuh_server_ip``` with your Wazuh Server IP
+Modify manifest property ```wazuh_server_address``` with your Wazuh Server IP
 
 **Deploy**
 ```
-bosh -e your_bosh_environment -d wazuh-agent deploy manifiest/wazuh-agent.yml
+bosh -e your_bosh_environment -d wazuh-agent deploy manifest/wazuh-agent.yml
 ```
