@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -u # report the usage of uninitialized variables
+
+JOB_NAME=wazuh-agent
+JOB_DIR=/var/vcap/jobs/$JOB_NAME
+LOG_DIR=/var/vcap/sys/log/$JOB_NAME
+TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
+
+# Checking connection
+sleep 5
+if grep "Connected to the server" ${LOG_DIR}/wazuh_logs/ossec.log > /dev/null; then
+  echo "$TIMESTAMP : INFO : Agent successfully installed, registered, and connected to the manager."  >> ${LOG_DIR}/setup.log
+else
+  echo "$TIMESTAMP : ERROR : Agent is not connect to the manager. Retrying in 120 seconds."  >> ${LOG_DIR}/setup.log
+fi
+
+exit 0

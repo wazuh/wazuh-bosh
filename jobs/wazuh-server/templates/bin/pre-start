@@ -6,7 +6,8 @@ set -u # report the usage of uninitialized variables
 JOB_NAME=wazuh-server
 JOB_DIR=/var/vcap/jobs/$JOB_NAME
 PACKAGE_DIR=/var/vcap/packages/wazuh-server
-WAZUH_VERSION=wazuh-server-3.0.0
+WAZUH_VERSION=wazuh-server-3.2.1
+LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 
 if [ ! -f $PACKAGE_DIR/$WAZUH_VERSION/bin/ossec-control ]; then
     cp $JOB_DIR/config/preloaded-vars.conf ${PACKAGE_DIR}/${WAZUH_VERSION}/source_code/etc/preloaded-vars.conf
@@ -14,6 +15,9 @@ if [ ! -f $PACKAGE_DIR/$WAZUH_VERSION/bin/ossec-control ]; then
     cd ${USER_DIR}/source_code
     ./install.sh
     cp $JOB_DIR/config/sslmanager.cert $JOB_DIR/config/sslmanager.key ${PACKAGE_DIR}/${WAZUH_VERSION}/etc/
+    if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
+        ln -s $PACKAGE_DIR/$WAZUH_VERSION/logs/ ${LOG_DIR}/wazuh_logs
+    fi
 fi
 
 exit 0

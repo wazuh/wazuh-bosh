@@ -1,0 +1,44 @@
+#!/bin/bash
+
+JOB_NAME=wazuh-agent
+JOB_DIR=/var/vcap/jobs/$JOB_NAME
+PACKAGE_DIR=/var/vcap/packages/wazuh-agent
+LOG_DIR=/var/vcap/sys/log/$JOB_NAME
+DATA_DIR=/var/vcap/data/wazuh-agent
+
+# Start daemon
+while true
+do
+  TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
+  # Check if the agent is registered.
+  grep bosh-noregistered ${PACKAGE_DIR}/etc/client.keys
+  if [ $? -eq 0 ] ; then
+      if ${PACKAGE_DIR}/bin/agent-auth -g root -m <%= p("wazuh_server_registration_address") %> -A <%= p("wazuh_agents_prefix") %>`hostname`
+      then
+        cp ${PACKAGE_DIR}/etc/client.keys ${DATA_DIR}/etc/
+        echo "$TIMESTAMP : INFO : Registration success" >> ${LOG_DIR}/setup.log
+        ${JOB_DIR}/bin/wazuh_agent_ctl ossec-agentd stop
+        ${JOB_DIR}/bin/wazuh_agent_ctl ossec-agentd start
+      else
+        cp ${JOB_DIR}/config/client.keys.sample ${PACKAGE_DIR}/etc/client.keys
+        echo "$TIMESTAMP : ERROR : Registration failure" >> ${LOG_DIR}/setup.log
+      fi
+  # Check if the agent is connected
+  else 
+      . ${PACKAGE_DIR}/var/run/ossec-agentd.state
+      if [ $? -eq 0 ] ; then
+        if [ "$status" == "connected" ] ; then
+          echo "$TIMESTAMP : INFO : Agent connected to the Manager."  >> ${LOG_DIR}/setup.log
+          exit 0
+        else
+          echo "$TIMESTAMP : ERROR : Agent not connected to the Manager."  >> ${LOG_DIR}/setup.log
+          ${JOB_DIR}/bin/wazuh_agent_ctl ossec-agentd stop
+          ${JOB_DIR}/bin/wazuh_agent_ctl ossec-agentd start
+       fi
+      else
+        echo "$TIMESTAMP : ERROR : Agent not connected to the Manager."
+      fi
+  fi
+  sleep 120
+done
+exit 0

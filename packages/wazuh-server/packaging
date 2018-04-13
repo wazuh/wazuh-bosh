@@ -9,8 +9,8 @@ set -x
 CPUS=$(grep -c ^processor /proc/cpuinfo)
 export HOME=/var/vcap
 
-export WAZUH_VERSION="wazuh-server-3.0.0"
-export WAZUH_TAR_FOLDER="wazuh-3.0"
+export WAZUH_VERSION="wazuh-server-3.2.1"
+export WAZUH_TAR_FOLDER="wazuh-3.2"
 export USER_DIR=${BOSH_INSTALL_TARGET}/${WAZUH_VERSION}
 
 echo "Untar into ${BOSH_INSTALL_TARGET}"

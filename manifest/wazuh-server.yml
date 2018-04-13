@@ -3,7 +3,7 @@ name: wazuh-server
 
 releases:
 - name: wazuh
-  version: 3.0.0
+  version: 3.2.1
 
 stemcells:
 - alias: default
@@ -41,3 +41,4 @@ variables:
   type: certificate
   options:
     ca: sslmanager_ca
+
