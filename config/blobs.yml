@@ -1,8 +1,4 @@
-wazuh-agent/wazuh-agent-3.2.1.tar.gz:
-  size: 22181774
-  object_id: d7e3003f-deaf-4509-41ba-34d21e4bbdc8
-  sha: a08fdf48b5354edc0409e6fa17f780bfd0e2af27
-wazuh-server/wazuh-server-3.2.1.tar.gz:
-  size: 22181774
-  object_id: f0fd1ccb-2c68-4c91-62be-6cb9ca83b760
-  sha: a08fdf48b5354edc0409e6fa17f780bfd0e2af27
+wazuh-agent/wazuh-agent-3.10.2.tar.gz:
+  size: 32472843
+  object_id: c4e1aeb1-39ab-4741-6317-0812fc5ee3d5
+  sha: 0a0b97326791b0eb858efdb505cfb4443fda7052

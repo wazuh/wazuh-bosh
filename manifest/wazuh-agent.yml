@@ -3,11 +3,11 @@ name: wazuh-agent
 
 releases:
 - name: wazuh
-  version: 3.2.1
+  version: 3.10.2
 
 stemcells:
 - alias: default
-  os: ubuntu-trusty
+  os: ubuntu-xenial
   version: latest
 
 update:
@@ -24,10 +24,11 @@ instance_groups:
   - name: wazuh-agent
     release: wazuh
     properties:
-      wazuh_server_address: 172.0.0.4
-      wazuh_server_registration_address: 172.0.0.4
+      wazuh_server_address: 10.0.0.83
+      wazuh_server_registration_address: 10.0.0.83
       wazuh_agents_prefix: "bosh-"
       wazuh_agent_profile: "generic"
+      wazuh_server_protocol: "tcp"
   vm_type: default
   stemcell: default
   persistent_disk: 10240

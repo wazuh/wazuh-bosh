@@ -5,27 +5,31 @@
 **Clone repository**
 
 ```
-git clone https://github.com/wazuh/wazuh-bosh
+git clone https://github.com/wazuh/wazuh-bosh-pilot
 ```
 
 
 **Download Wazuh source code**
 
 ```
-mkdir /tmp/blobs
-curl -o /tmp/blobs/wazuh-3.2.1.tar.gz -L "https://github.com/wazuh/wazuh/archive/v3.2.1.tar.gz"
+mkdir -p /tmp/blobs
+curl -o /tmp/blobs/wazuh-3.10.2.tar.gz -L "https://github.com/wazuh/wazuh/archive/v3.10.2.tar.gz"
+tar -xvf /tmp/blobs/wazuh-3.10.2.tar.gz -C /tmp/blobs/
+make -C /tmp/blobs/wazuh-3.10.2/src deps
+rm -f /tmp/blobs/wazuh-3.10.2.tar.gz
+tar -czf /tmp/blobs/wazuh-3.10.2.tar.gz -C /tmp/blobs/ wazuh-3.10.2
+rm -rf /tmp/blobs/wazuh-3.10.2
 ```
 
 **Add blobs**
 
 ```
-bosh add-blob /tmp/blobs/wazuh-3.2.1.tar.gz wazuh-server/wazuh-server-3.2.1.tar.gz
-bosh add-blob /tmp/blobs/wazuh-3.2.1.tar.gz wazuh-agent/wazuh-agent-3.2.1.tar.gz
+bosh add-blob /tmp/blobs/wazuh-3.10.2.tar.gz wazuh/wazuh-3.10.2.tar.gz
 ```
 
-**Upload blob to S3**
+**Upload blob**
 
-If you have configured an external S3 bucket to store blobs, you can upload the blob just created to the store.
+Upload the blob just created to the store.
 
 ```
 bosh upload-blobs
@@ -34,7 +38,7 @@ bosh upload-blobs
 **Create release**
 
 ```
-bosh create-release --final --version=3.2.1
+bosh create-release --final --version=3.10.2
 ```
 
 **Upload release**

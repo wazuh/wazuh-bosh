@@ -13,7 +13,7 @@ do
   # Check if the agent is registered.
   grep bosh-noregistered ${PACKAGE_DIR}/etc/client.keys
   if [ $? -eq 0 ] ; then
-      if ${PACKAGE_DIR}/bin/agent-auth -g root -m <%= p("wazuh_server_registration_address") %> -A <%= p("wazuh_agents_prefix") %>`hostname`
+      if ${PACKAGE_DIR}/bin/agent-auth -m <%= p("wazuh_server_registration_address") %> -A <%= p("wazuh_agents_prefix") %>`hostname`
       then
         cp ${PACKAGE_DIR}/etc/client.keys ${DATA_DIR}/etc/
         echo "$TIMESTAMP : INFO : Registration success" >> ${LOG_DIR}/setup.log

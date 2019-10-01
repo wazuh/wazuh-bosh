@@ -7,6 +7,9 @@ JOB_DIR=/var/vcap/jobs/$JOB_NAME
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
 
+# Set Java path 
+export PATH=$PATH:/var/vcap/packages/wazuh-agent/wodles/ciscat/java/bin/
+
 # Checking connection
 sleep 5
 if grep "Connected to the server" ${LOG_DIR}/wazuh_logs/ossec.log > /dev/null; then

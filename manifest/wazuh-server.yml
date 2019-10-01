@@ -3,11 +3,11 @@ name: wazuh-server
 
 releases:
 - name: wazuh
-  version: 3.2.1
+  version: 3.10.2
 
 stemcells:
 - alias: default
-  os: ubuntu-trusty
+  os: ubuntu-xenial
   version: latest
 
 update:
@@ -29,16 +29,4 @@ instance_groups:
   networks:
   - name: default
   properties:
-    sslmanager_key: ((sslmanager_ssl.private_key))
-    sslmanager_cert: ((sslmanager_ssl.certificate))
-
-variables:
-- name: sslmanager_ca
-  type: certificate
-  options:
-    is_ca: true
-- name: sslmanager_ssl
-  type: certificate
-  options:
-    ca: sslmanager_ca
-
+    cluster_key: "d683ecbf1f357cba8c86594dd0094a0c"

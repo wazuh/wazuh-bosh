@@ -22,3 +22,9 @@ check process ossec-syscheckd
   start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-syscheckd start"
   stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-syscheckd stop"
   group vcap
+  
+check process wazuh-modulesd
+  matching "wazuh-modulesd"
+  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl wazuh-modulesd start"
+  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl wazuh-modulesd stop"
+  group vcap  

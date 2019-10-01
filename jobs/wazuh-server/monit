@@ -47,3 +47,9 @@ check process ossec-authd
   start program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-authd start"
   stop program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl ossec-authd stop"
   group vcap
+  
+check process wazuh-db
+  matching "wazuh-db"
+  start program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl wazuh-db start"
+  stop program "/var/vcap/jobs/wazuh-server/bin/wazuh_server_ctl wazuh-db stop"
+  group vcap

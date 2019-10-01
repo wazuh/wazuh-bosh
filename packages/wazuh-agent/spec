@@ -1,5 +1,6 @@
 ---
 name: wazuh-agent
 dependencies: []
+
 files:
-- wazuh-agent/wazuh-agent-3.2.1.tar.gz
+- wazuh/wazuh-3.10.2.tar.gz

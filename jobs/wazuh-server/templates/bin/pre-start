@@ -6,18 +6,34 @@ set -u # report the usage of uninitialized variables
 JOB_NAME=wazuh-server
 JOB_DIR=/var/vcap/jobs/$JOB_NAME
 PACKAGE_DIR=/var/vcap/packages/wazuh-server
-WAZUH_VERSION=wazuh-server-3.2.1
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
+DATA_DIR=/var/vcap/data/wazuh-server
+TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
 
-if [ ! -f $PACKAGE_DIR/$WAZUH_VERSION/bin/ossec-control ]; then
-    cp $JOB_DIR/config/preloaded-vars.conf ${PACKAGE_DIR}/${WAZUH_VERSION}/source_code/etc/preloaded-vars.conf
-    export USER_DIR=${PACKAGE_DIR}/${WAZUH_VERSION}
-    cd ${USER_DIR}/source_code
-    ./install.sh
-    cp $JOB_DIR/config/sslmanager.cert $JOB_DIR/config/sslmanager.key ${PACKAGE_DIR}/${WAZUH_VERSION}/etc/
-    if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
-        ln -s $PACKAGE_DIR/$WAZUH_VERSION/logs/ ${LOG_DIR}/wazuh_logs
-    fi
+mkdir -p ${DATA_DIR}/etc
+rm -f /etc/ossec-init.conf
+
+cp ${JOB_DIR}/config/preloaded-vars.conf ${PACKAGE_DIR}/source_code/etc/preloaded-vars.conf
+cd ${PACKAGE_DIR}/source_code
+./install.sh
+cp ${JOB_DIR}/config/ossec.conf ${PACKAGE_DIR}/etc/
+cp ${JOB_DIR}/config/local_internal_options.conf ${PACKAGE_DIR}/etc/
+cp $JOB_DIR/config/sslmanager.cert $JOB_DIR/config/sslmanager.key ${PACKAGE_DIR}/${WAZUH_VERSION}/etc/
+
+if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
+    ln -s ${PACKAGE_DIR}/logs/ ${LOG_DIR}/wazuh_logs
 fi
+
+${JOB_DIR}/bin/wazuh_server_ctl ossec-authd start
+${JOB_DIR}/bin/wazuh_server_ctl wazuh-db start
+${JOB_DIR}/bin/wazuh_server_ctl ossec-execd start
+${JOB_DIR}/bin/wazuh_server_ctl ossec-analysisd start
+${JOB_DIR}/bin/wazuh_server_ctl ossec-syscheckd start
+${JOB_DIR}/bin/wazuh_server_ctl ossec-remoted start
+${JOB_DIR}/bin/wazuh_server_ctl ossec-logcollector start
+${JOB_DIR}/bin/wazuh_server_ctl ossec-monitord start
+${JOB_DIR}/bin/wazuh_server_ctl wazuh-modulesd start
+
+
 
 exit 0

@@ -8,11 +8,15 @@ templates:
   bin/pre-start.erb: bin/pre-start
   bin/post-start.erb: bin/post-start
   bin/registration.erb: bin/registration.sh
+  bin/kaspersky.erb: bin/kaspersky.sh
   bin/wazuh_agent_ctl: bin/wazuh_agent_ctl
   config/ossec.conf.erb: config/ossec.conf
   config/preloaded-vars.conf.erb: config/preloaded-vars.conf
   config/local_internal_options.conf: config/local_internal_options.conf
+  config/active-response/quarantine.sh: config/active-response/quarantine.sh
   config/client.keys.sample: config/client.keys.sample
+  config/CIS_Ubuntu_Linux_14.04_LTS_Benchmark_v2.0.0-oval.xml: config/CIS_Ubuntu_Linux_14.04_LTS_Benchmark_v2.0.0-oval.xml
+  config/CIS_Ubuntu_Linux_14.04_LTS_Benchmark_v2.0.0-xccdf.xml: config/CIS_Ubuntu_Linux_14.04_LTS_Benchmark_v2.0.0-xccdf.xml
   
   
 properties:
@@ -21,7 +25,7 @@ properties:
   wazuh_server_registration_address:
     description: "Wazuh Manager registration service (authd) IP or DNS"
   wazuh_agents_prefix:
-    description: "Agents name prefix. {PREFIX}instance-id. Ex: bosh-xxx-yyyy-zzz11c-b02a-8a19a66c4ab7"
+    description: "Agents name prefix. {PREFIX}instance-id. Ex: bosh-d3b79f26-1c11-411c-b02a-8a19a66c4ab7"
     default: "bosh-"
   wazuh_agent_profile:
     description: "Agent profile. Ex: generic,ubuntu,ubuntu16,zone1"
@@ -29,3 +33,6 @@ properties:
   wazuh_server_protocol:
     description: "Agent communication with Manager protocol. Values: udp,tcp"
     default: "tcp"
+  ksc_server_node:
+    description: "Set IP address of Kaspersky Security Center. Values: IP.Address"
+    default: "10.0.0.83"

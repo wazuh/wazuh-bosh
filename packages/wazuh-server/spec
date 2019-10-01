@@ -1,5 +1,6 @@
 ---
 name: wazuh-server
 dependencies: []
+
 files:
-- wazuh-server/wazuh-server-3.2.1.tar.gz
+- wazuh/wazuh-3.10.2.tar.gz

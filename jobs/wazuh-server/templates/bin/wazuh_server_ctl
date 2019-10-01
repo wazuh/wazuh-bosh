@@ -3,11 +3,10 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
-WAZUH_VERSION=wazuh-server-3.2.1
 JOB_NAME=wazuh-server
 PACKAGE_DIR=/var/vcap/packages/wazuh-server
 STORE_DIR=/var/vcap/store/$JOB_NAME
-RUN_DIR=${PACKAGE_DIR}/${WAZUH_VERSION}/var/run
+RUN_DIR=${PACKAGE_DIR}/var/run
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 PIDFILE=${RUN_DIR}/${1}-*.pid
 
@@ -18,7 +17,7 @@ case $2 in
     mkdir -p $RUN_DIR
     mkdir -p $LOG_DIR
     mkdir -p $STORE_DIR
-    exec ${PACKAGE_DIR}/${WAZUH_VERSION}/bin/$1
+    exec ${PACKAGE_DIR}/bin/$1
 
 
     ;;
