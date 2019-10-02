@@ -1,5 +1,5 @@
 ---
-name: wazuh-server
+name: wazuh-manager
 
 releases:
 - name: wazuh
@@ -17,11 +17,11 @@ update:
   update_watch_time: 5000-60000
 
 instance_groups:
-- name: wazuh-server
+- name: wazuh-manager
   azs: [z1]
   instances: 1
   jobs:
-  - name: wazuh-server
+  - name: wazuh-manager
     release: wazuh
   vm_type: default
   stemcell: default

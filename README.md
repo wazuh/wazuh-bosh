@@ -5,26 +5,15 @@
 **Clone repository**
 
 ```
-git clone https://github.com/wazuh/wazuh-bosh-pilot
+git clone https://github.com/wazuh/wazuh-bosh
 ```
 
 
-**Download Wazuh source code**
+**Add blobs for Wazuh manager and Wazuh agent**
 
 ```
-mkdir -p /tmp/blobs
-curl -o /tmp/blobs/wazuh-3.10.2.tar.gz -L "https://github.com/wazuh/wazuh/archive/v3.10.2.tar.gz"
-tar -xvf /tmp/blobs/wazuh-3.10.2.tar.gz -C /tmp/blobs/
-make -C /tmp/blobs/wazuh-3.10.2/src deps
-rm -f /tmp/blobs/wazuh-3.10.2.tar.gz
-tar -czf /tmp/blobs/wazuh-3.10.2.tar.gz -C /tmp/blobs/ wazuh-3.10.2
-rm -rf /tmp/blobs/wazuh-3.10.2
-```
-
-**Add blobs**
-
-```
-bosh add-blob /tmp/blobs/wazuh-3.10.2.tar.gz wazuh/wazuh-3.10.2.tar.gz
+bosh add-blob /tmp/blobs/wazuh-agent.tar.gz wazuh/wazuh-agent.tar.gz
+bosh add-blob /tmp/blobs/wazuh-manager.tar.gz wazuh/wazuh-manager.tar.gz
 ```
 
 **Upload blob**
@@ -38,7 +27,7 @@ bosh upload-blobs
 **Create release**
 
 ```
-bosh create-release --final --version=3.10.2
+bosh create-release --final --version=x.y.z
 ```
 
 **Upload release**
@@ -48,11 +37,11 @@ bosh -e your_bosh_environment upload-release
 ```
 
 ## Deploy Wazuh Server
-Configure manifest/wazuh-server.yml according to the number of instances you want to create.
+Configure manifest/wazuh-manager.yml according to the number of instances you want to create.
 
 **Deploy**
 ```
-bosh -e your_bosh_environment -d wazuh-server deploy manifest/wazuh-server.yml
+bosh -e your_bosh_environment -d wazuh-manager deploy manifest/wazuh-manager.yml
 ```
 
 ## Deploy Wazuh Agents

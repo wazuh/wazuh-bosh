@@ -9,14 +9,9 @@ set -x
 CPUS=$(grep -c ^processor /proc/cpuinfo)
 export HOME=/var/vcap
 
-export WAZUH_FOLDER="wazuh-agent"
+export WAZUH_FOLDER="wazuh-manager"
 
 echo "Untar into ${BOSH_INSTALL_TARGET}/source_code"
 mkdir -p ${BOSH_INSTALL_TARGET}/source_code
 
 tar xzvf wazuh/${WAZUH_FOLDER}.tar.gz -C ${BOSH_INSTALL_TARGET}/source_code
-
-# echo "Compiling code and installing..."
-# cd ${BOSH_INSTALL_TARGET}/source_code/src
-# make clean
-# make -j${CPUS} PREFIX=${BOSH_INSTALL_TARGET} TARGET=agent USE_SELINUX=0 USE_AUDIT=0 DISABLE_SHARED=1

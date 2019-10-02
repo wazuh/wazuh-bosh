@@ -1,8 +1,8 @@
 ---
-name: wazuh-server
+name: wazuh-manager
 
 packages:
-- wazuh-server
+- wazuh-manager
 
 templates:
   bin/pre-start: bin/pre-start

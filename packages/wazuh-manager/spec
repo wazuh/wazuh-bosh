@@ -1,0 +1,6 @@
+---
+name: wazuh-manager
+dependencies: []
+
+files:
+- wazuh/wazuh-manager.tar.gz

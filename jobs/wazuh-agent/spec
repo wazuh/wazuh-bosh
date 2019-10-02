@@ -8,17 +8,13 @@ templates:
   bin/pre-start.erb: bin/pre-start
   bin/post-start.erb: bin/post-start
   bin/registration.erb: bin/registration.sh
-  bin/kaspersky.erb: bin/kaspersky.sh
   bin/wazuh_agent_ctl: bin/wazuh_agent_ctl
   config/ossec.conf.erb: config/ossec.conf
   config/preloaded-vars.conf.erb: config/preloaded-vars.conf
   config/local_internal_options.conf: config/local_internal_options.conf
-  config/active-response/quarantine.sh: config/active-response/quarantine.sh
   config/client.keys.sample: config/client.keys.sample
-  config/CIS_Ubuntu_Linux_14.04_LTS_Benchmark_v2.0.0-oval.xml: config/CIS_Ubuntu_Linux_14.04_LTS_Benchmark_v2.0.0-oval.xml
-  config/CIS_Ubuntu_Linux_14.04_LTS_Benchmark_v2.0.0-xccdf.xml: config/CIS_Ubuntu_Linux_14.04_LTS_Benchmark_v2.0.0-xccdf.xml
-  
-  
+
+
 properties:
   wazuh_server_address:
     description: "Wazuh Manager IP or DNS"
