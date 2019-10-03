@@ -6,19 +6,13 @@
 
 ```
 git clone https://github.com/wazuh/wazuh-bosh
+cd wazuh-bosh
 ```
 
-
-**Add blobs for Wazuh manager and Wazuh agent**
-
-```
-bosh add-blob /tmp/blobs/wazuh-agent.tar.gz wazuh/wazuh-agent.tar.gz
-bosh add-blob /tmp/blobs/wazuh-manager.tar.gz wazuh/wazuh-manager.tar.gz
-```
 
 **Upload blob**
 
-Upload the blob just created to the store.
+Upload the blobs to the blob store.
 
 ```
 bosh upload-blobs

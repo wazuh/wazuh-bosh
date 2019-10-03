@@ -19,7 +19,7 @@ update:
 instance_groups:
 - name: wazuh-agent
   azs: [z1]
-  instances: 1
+  instances: 10
   jobs:
   - name: wazuh-agent
     release: wazuh
