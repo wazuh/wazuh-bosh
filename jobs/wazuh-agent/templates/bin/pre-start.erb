@@ -18,23 +18,6 @@ cd ${PACKAGE_DIR}/source_code
 ./install.sh
 cp ${JOB_DIR}/config/ossec.conf ${PACKAGE_DIR}/etc/
 cp ${JOB_DIR}/config/local_internal_options.conf ${PACKAGE_DIR}/etc/
-cp ${JOB_DIR}/config/active-response/quarantine.sh ${PACKAGE_DIR}/active-response/bin/
-chown root:ossec ${PACKAGE_DIR}/active-response/bin/quarantine.sh
-chmod 750 ${PACKAGE_DIR}/active-response/bin/quarantine.sh
-
-mkdir -p ${PACKAGE_DIR}/wodles/ciscat/scanner ${PACKAGE_DIR}/wodles/ciscat/scanner/benchmarks ${PACKAGE_DIR}/wodles/ciscat/java
-
-cp ${JOB_DIR}/config/CIS_Ubuntu_Linux_14.04_LTS_Benchmark_v2.0.0-oval.xml ${PACKAGE_DIR}/wodles/ciscat/scanner/benchmarks/
-cp ${JOB_DIR}/config/CIS_Ubuntu_Linux_14.04_LTS_Benchmark_v2.0.0-xccdf.xml ${PACKAGE_DIR}/wodles/ciscat/scanner/benchmarks/
-
-tar xf ${PACKAGE_DIR}/source_code/ciscat.tar.gz -C ${PACKAGE_DIR}/wodles/ciscat/scanner
-tar xf ${PACKAGE_DIR}/source_code/java.tar.gz -C ${PACKAGE_DIR}/wodles/ciscat/
-
-chown -R root:ossec ${PACKAGE_DIR}/wodles/ciscat/java ${PACKAGE_DIR}/wodles/ciscat/scanner ${PACKAGE_DIR}/wodles/ciscat/scanner/benchmarks
-chmod -R 660 ${PACKAGE_DIR}/wodles/ciscat/scanner
-chmod -R 660 ${PACKAGE_DIR}/wodles/ciscat/scanner/benchmarks
-chmod 650 ${PACKAGE_DIR}/wodles/ciscat/scanner/CIS-CAT.sh
-
 
 if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
     ln -s ${PACKAGE_DIR}/logs/ ${LOG_DIR}/wazuh_logs
@@ -55,8 +38,11 @@ else
     echo "$TIMESTAMP : INFO : Agent was already registered" >> ${LOG_DIR}/setup.log
 fi
 
-# Start Kaspersky installation
-$JOB_DIR/bin/kaspersky.sh &
+${JOB_DIR}/bin/wazuh_agent_ctl ossec-agentd start
+${JOB_DIR}/bin/wazuh_agent_ctl ossec-execd start
+${JOB_DIR}/bin/wazuh_agent_ctl ossec-syscheckd start
+${JOB_DIR}/bin/wazuh_agent_ctl ossec-logcollector start
+${JOB_DIR}/bin/wazuh_agent_ctl wazuh-modulesd start
 
 # Start registration daemons
 $JOB_DIR/bin/registration.sh &
