@@ -9,6 +9,14 @@ git clone https://github.com/wazuh/wazuh-bosh
 cd wazuh-bosh
 ```
 
+**Download blobs from Git LFS (Ubuntu/Debian)**
+
+```
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+sudo apt-get install git-lfs
+git lfs install
+git lfs pull
+```
 
 **Upload blob**
 
