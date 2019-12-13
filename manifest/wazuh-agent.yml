@@ -1,36 +1,20 @@
 ---
-name: wazuh-agent
-
-releases:
-- name: wazuh
-  version: 3.10.2
-
-stemcells:
-- alias: default
-  os: ubuntu-xenial
-  version: latest
-
-update:
-  canaries: 2
-  max_in_flight: 1
-  canary_watch_time: 5000-60000
-  update_watch_time: 5000-60000
-
-instance_groups:
-- name: wazuh-agent
-  azs: [z1]
-  instances: 10
-  jobs:
-  - name: wazuh-agent
-    release: wazuh
-    properties:
-      wazuh_server_address: 172.0.3.4
-      wazuh_server_registration_address: 172.0.3.4
-      wazuh_agents_prefix: "bosh-"
-      wazuh_agent_profile: "generic"
-      wazuh_server_protocol: "tcp"
-  vm_type: default
-  stemcell: default
-  persistent_disk: 10240
-  networks:
-  - name: default
+  releases:
+  - name: "wazuh"
+    version: 3.10.2
+  
+  addons:
+  - name: wazuh
+    release: 3.10.2
+    jobs:
+    - name: wazuh-agent
+      release: wazuh
+      properties:
+          wazuh_server_address: 172.0.3.4
+          wazuh_server_registration_address: 172.0.3.4
+          wazuh_agents_prefix: "bosh-"
+          wazuh_agent_profile: "generic"
+          wazuh_server_protocol: "tcp"
+    exclude:
+      deployments: [wazuh-manager]
+  
