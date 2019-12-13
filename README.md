@@ -47,10 +47,13 @@ bosh -e your_bosh_environment -d wazuh-manager deploy manifest/wazuh-manager.yml
 ```
 
 ## Deploy Wazuh Agents
-Configure manifest/wazuh-agent.yml according to the number of agents you want to deploy.
-Modify manifest property ```wazuh_server_address``` with your Wazuh Server IP
 
-**Deploy**
+Obtain the address of your recently deployed Wazuh Manager and update the `wazuh_server_address` and `wazuh_server_address` settings in the [manifest/wazuh-agent.yml](https://github.com/wazuh/wazuh-bosh/blob/master/manifest/wazuh-agent.yml) runtime configuration file.
+
+Update your Director runtime configuration by executing:
+
 ```
-bosh -e your_bosh_environment -d wazuh-agent deploy manifest/wazuh-agent.yml
+bosh -e your_bosh_environment update-runtime-config --name=wazuh-agent-addons manifest/wazuh-agent.yml
 ```
+
+Redeploy your initial manifest to make Bosh install and configure the Wazuh Agent on target instances.
