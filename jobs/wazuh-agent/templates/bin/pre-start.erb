@@ -25,10 +25,21 @@ fi
 
 if [ ! -s ${DATA_DIR}/etc/client.keys ]; then
     SSL_CREDS=""
-    if [[ "<%= p("cert_path") %>" != "" && "<%= p("cert_key") %>" != "" ]] ; then
-      SSL_CREDS="-x <%= p("cert_path") %> -k <%= p("key_path") %>"
+    if  [[ "<%= p("wazuh_agent_cert_path") %>" != "" ]] && \
+        [[ -f "<%= p("wazuh_agent_cert_path") %>" ]] && \
+        [[ "<%= p("wazuh_agent_key_path") %>" != "" ]] &&  \
+        [[ -f "<%= p("wazuh_agent_key_path") %>" ]] ; then
+
+        cp "<%= p("wazuh_agent_cert_path") %>" ${DATA_DIR}/etc
+        cert_copy_rc=$?
+        cp "<%= p("wazuh_agent_key_path") %>" ${DATA_DIR}/etc
+        key_copy_rc=$?
+        if [[ ${cert_copy_rc} -eq 0 && ${key_copy_rc} -eq 0 ]]; then
+          cert_name=$(basename "<%= p("wazuh_agent_cert_path") %>")
+          key_name=$(basename "<%= p("wazuh_agent_key_path") %>")
+        fi
     fi
-    if ${PACKAGE_DIR}/bin/agent-auth -m <%= p("wazuh_server_registration_address") %> -A <%= p("wazuh_agents_prefix") %>`hostname` $SSL_CREDS
+    if ${PACKAGE_DIR}/bin/agent-auth -m "<%= p("wazuh_server_registration_address") %>" -A "<%= p("wazuh_agents_prefix") %>"`hostname` $SSL_CREDS
     then
       cp ${PACKAGE_DIR}/etc/client.keys ${DATA_DIR}/etc/
       echo "$TIMESTAMP : INFO : Registration success" >> ${LOG_DIR}/setup.log
