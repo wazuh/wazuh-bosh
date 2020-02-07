@@ -12,11 +12,10 @@
       properties:
           wazuh_server_address: 172.0.3.4
           wazuh_server_registration_address: 172.0.3.4
+          wazuh_server_protocol: "tcp"
           wazuh_agents_prefix: "bosh-"
           wazuh_agent_profile: "generic"
-          wazuh_server_protocol: "tcp"
-          cert_path: ""
-          key_path: ""
+          wazuh_agent_cert_path: "/var/vcap/sslagent.cert"
+          wazuh_agent_key_path: "/var/vcap/sslagent.key"
     exclude:
       deployments: [wazuh-manager]
-  
