@@ -32,3 +32,9 @@ properties:
   ksc_server_node:
     description: "Set IP address of Kaspersky Security Center. Values: IP.Address"
     default: "10.0.0.83"
+  wazuh_agent_cert_path:
+    description: "Agent's certificate path. Ex: /var/vcap/sslagent.cert"
+    default: ""
+  wazuh_agent_key_path:
+    description: "Agent's key path. Ex: /var/vcap/sslagent.key"
+    default: ""
