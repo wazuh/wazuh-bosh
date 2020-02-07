@@ -15,6 +15,8 @@
           wazuh_agents_prefix: "bosh-"
           wazuh_agent_profile: "generic"
           wazuh_server_protocol: "tcp"
+          cert_path: ""
+          key_path: ""
     exclude:
       deployments: [wazuh-manager]
   
