@@ -15,7 +15,5 @@
           wazuh_server_protocol: "tcp"
           wazuh_agents_prefix: "bosh-"
           wazuh_agent_profile: "generic"
-          wazuh_agent_cert_path: "/var/vcap/sslagent.cert"
-          wazuh_agent_key_path: "/var/vcap/sslagent.key"
     exclude:
       deployments: [wazuh-manager]
