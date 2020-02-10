@@ -25,19 +25,14 @@ fi
 
 if [ ! -s ${DATA_DIR}/etc/client.keys ]; then
     SSL_CREDS=""
-    if  [[ "<%= p("wazuh_agent_cert_path") %>" != "" ]] && \
-        [[ -f "<%= p("wazuh_agent_cert_path") %>" ]] && \
-        [[ "<%= p("wazuh_agent_key_path") %>" != "" ]] &&  \
-        [[ -f "<%= p("wazuh_agent_key_path") %>" ]] ; then
-
-        cp "<%= p("wazuh_agent_cert_path") %>" ${DATA_DIR}/etc
-        cert_copy_rc=$?
-        cp "<%= p("wazuh_agent_key_path") %>" ${DATA_DIR}/etc
-        key_copy_rc=$?
-        if [[ ${cert_copy_rc} -eq 0 && ${key_copy_rc} -eq 0 ]]; then
-          cert_name=$(basename "<%= p("wazuh_agent_cert_path") %>")
-          key_name=$(basename "<%= p("wazuh_agent_key_path") %>")
-        fi
+    if  [[ "<%= p("wazuh_agent_cert") %>" != "" ]] && \
+        [[ "<%= p("wazuh_agent_key") %>" != "" ]] ; then
+        echo "<%= p("wazuh_agent_cert") %>" > ${PACKAGE_DIR}/etc/sslagent.cert
+        echo "<%= p("wazuh_agent_key") %>" > ${PACKAGE_DIR}/etc/sslagent.key
+        chown root:root ${PACKAGE_DIR}/etc/sslagent.cert ${PACKAGE_DIR}/etc/sslagent.key
+        chmod 400 ${PACKAGE_DIR}/etc/sslagent.cert ${PACKAGE_DIR}/etc/sslagent.key
+        echo "$TIMESTAMP : INFO : Agent cert and key imported succesfully" >> ${LOG_DIR}/setup.log
+        SSL_CREDS="-x ${PACKAGE_DIR}/etc/sslagent.cert -k ${PACKAGE_DIR}/etc/sslagent.key"
     fi
     if ${PACKAGE_DIR}/bin/agent-auth -m "<%= p("wazuh_server_registration_address") %>" -A "<%= p("wazuh_agents_prefix") %>"`hostname` $SSL_CREDS
     then
