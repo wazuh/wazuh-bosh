@@ -102,5 +102,11 @@ To pass your generated `sslagent.cert` and `sslagent.key` files to your runtime 
       deployments: [wazuh-manager]
 ```
 
+Then, update your runtime configuration by executing:
+
+```
+bosh -e your_bosh_environment update-runtime-config --name=wazuh-agent-addons manifest/wazuh-agent.yml
+```
+
 This way, your cert and key will be rendered under `/var/vcap/data/packages/wazuh-agent/<random_id>/etc/` and used in the registration process and any communications between the Agent and Manager.
 
