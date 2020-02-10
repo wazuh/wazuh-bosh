@@ -24,7 +24,17 @@ if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
 fi
 
 if [ ! -s ${DATA_DIR}/etc/client.keys ]; then
-    if ${PACKAGE_DIR}/bin/agent-auth -m <%= p("wazuh_server_registration_address") %> -A <%= p("wazuh_agents_prefix") %>`hostname`
+    SSL_CREDS=""
+    if  [[ "<%= p("wazuh_agent_cert") %>" != "" ]] && \
+        [[ "<%= p("wazuh_agent_key") %>" != "" ]] ; then
+        echo "<%= p("wazuh_agent_cert") %>" > ${PACKAGE_DIR}/etc/sslagent.cert
+        echo "<%= p("wazuh_agent_key") %>" > ${PACKAGE_DIR}/etc/sslagent.key
+        chown root:root ${PACKAGE_DIR}/etc/sslagent.cert ${PACKAGE_DIR}/etc/sslagent.key
+        chmod 400 ${PACKAGE_DIR}/etc/sslagent.cert ${PACKAGE_DIR}/etc/sslagent.key
+        echo "$TIMESTAMP : INFO : Agent cert and key imported succesfully" >> ${LOG_DIR}/setup.log
+        SSL_CREDS="-x ${PACKAGE_DIR}/etc/sslagent.cert -k ${PACKAGE_DIR}/etc/sslagent.key"
+    fi
+    if ${PACKAGE_DIR}/bin/agent-auth -m "<%= p("wazuh_server_registration_address") %>" -A "<%= p("wazuh_agents_prefix") %>"`hostname` $SSL_CREDS
     then
       cp ${PACKAGE_DIR}/etc/client.keys ${DATA_DIR}/etc/
       echo "$TIMESTAMP : INFO : Registration success" >> ${LOG_DIR}/setup.log

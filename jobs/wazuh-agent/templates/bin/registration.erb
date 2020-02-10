@@ -12,8 +12,13 @@ do
   TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
   # Check if the agent is registered.
   grep bosh-noregistered ${PACKAGE_DIR}/etc/client.keys
-  if [ $? -eq 0 ] ; then
-      if ${PACKAGE_DIR}/bin/agent-auth -m <%= p("wazuh_server_registration_address") %> -A <%= p("wazuh_agents_prefix") %>`hostname`
+  if [[ $? -eq 0 ]] ; then
+      SSL_CREDS=""
+      if  [[ "<%= p("wazuh_agent_cert") %>" != "" ]] && \
+        [[ "<%= p("wazuh_agent_key") %>" != "" ]] ; then
+        SSL_CREDS="-x ${DATA_DIR}/etc/sslagent.cert -k ${DATA_DIR}/etc/sslagent.key"
+      fi
+      if ${PACKAGE_DIR}/bin/agent-auth -m <%= p("wazuh_server_registration_address") %> -A <%= p("wazuh_agents_prefix") %>`hostname` $SSL_CREDS
       then
         cp ${PACKAGE_DIR}/etc/client.keys ${DATA_DIR}/etc/
         echo "$TIMESTAMP : INFO : Registration success" >> ${LOG_DIR}/setup.log
