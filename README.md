@@ -3,42 +3,45 @@
 ## Prepare release
 
 **Clone repository**
-
 ```
 git clone https://github.com/wazuh/wazuh-bosh
 cd wazuh-bosh
 ```
 
-**Download blobs from Git LFS (Ubuntu/Debian)**
-
+**Install Git LFS (Ubuntu/Debian)**
 ```
 curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
 sudo apt-get install git-lfs
+```
+
+**Install Git LFS (MacOS)**
+```
+brew install git-lfs
+```
+
+**Download blobs from Git LFS**
+```
 git lfs install
 git lfs pull
 ```
 
-**Upload blob**
-
-Upload the blobs to the blob store.
-
+**Upload blobs to the blob store**
 ```
 bosh upload-blobs
 ```
 
 **Create release**
-
 ```
 bosh create-release --final --version=x.y.z
 ```
 
 **Upload release**
-
 ```
 bosh -e your_bosh_environment upload-release
 ```
 
 ## Deploy Wazuh Server
+
 Configure manifest/wazuh-manager.yml according to the number of instances you want to create.
 
 **Deploy**
@@ -71,7 +74,7 @@ To pass your generated `sslagent.cert` and `sslagent.key` files to your runtime 
   releases:
   - name: "wazuh"
     version: 3.10.2
-  
+
   addons:
   - name: wazuh
     release: 3.10.2
@@ -110,3 +113,14 @@ bosh -e your_bosh_environment update-runtime-config --name=wazuh-agent-addons ma
 
 This way, your cert and key will be rendered under `/var/vcap/data/packages/wazuh-agent/<random_id>/etc/` and used in the registration process and any communications between the Agent and Manager.
 
+## General usage notes
+
+### Wazuh deployed via Docker
+
+If your Wazuh Docker deployment does not contain any extra configurations, it will be necessary to modify the `wazuh_server_protocol` property in the [manifest/wazuh-agent.yml](https://github.com/wazuh/wazuh-bosh/blob/master/manifest/wazuh-agent.yml) to `UDP` given that this bosh agent will attempt to connect using the port 1514 that is reserved to UDP in the Docker deployment.
+
+### Cloud Foundry resources registration
+
+Once your Bosh release is completed successfully the agents will be able to register themselves normally against any Wazuh manager. If you choose to use an external manager or deployed agents across different clusters, you might face duplicated IP Addresses.
+
+Wazuh chooses to primarily identify hosts with their IP Addresses but it is possible to change that by modifying the tag `<use_source_ip>` to **no** inside the Wazuh Manager's `ossec.conf` file.
