@@ -19,7 +19,7 @@ sudo apt-get install git-lfs
 brew install git-lfs
 ```
 
-**Download blobs from Git LFS**
+**Download blobs from the `wazuh-bosh` repository using Git LFS**
 ```
 git lfs install
 git lfs pull
