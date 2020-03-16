@@ -1,53 +1,94 @@
 # Wazuh for Bosh
 
-## Prepare release
+## Precompile Wazuh Manager and Agent
 
-**Clone repository**
-```
-git clone https://github.com/wazuh/wazuh-bosh
-cd wazuh-bosh
-```
+- Install compilation  dependencies:
 
-**Install Git LFS (Ubuntu/Debian)**
 ```
-curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
-sudo apt-get install git-lfs
+sudo apt-get update
+sudo apt-get install make gcc libc6-dev curl automake autoconf libtool -y
 ```
 
-**Install Git LFS (MacOS)**
+- Download and extract desired package
+
 ```
-brew install git-lfs
+mkdir -p /tmp/blobs
+curl -o /tmp/blobs/wazuh-3.10.2.tar.gz -L https://github.com/wazuh/wazuh/archive/v3.10.2.tar.gz
+tar xvzf /tmp/blobs/wazuh-3.10.2.tar.gz -C /tmp/blobs/
+cp /tmp/blob/wazuh-3.10.2 /tpm/blob/wazuh-3.10.2-agent -R
+mv /tmp/blob/wazuh-3.10.2 /tmp/blobs/wazuh-3.10.2-manager
 ```
 
-**Download blobs from the `wazuh-bosh` repository using Git LFS**
+- Clean previous builds and compile Wazuh Manager
+
 ```
-git lfs install
-git lfs pull
+make -C /tmp/blobs/wazuh-3.10.2-manager/src clean
+make -C /tmp/blobs/wazuh-3.10.2-manager/src deps
+make -C /tmp/blobs/wazuh-3.10.2-manager/src -j$(nproc) PREFIX=/var/vcap/packages/wazuh-manager TARGET=server USE_SELINUX=0 USE_AUDIT=0 DISABLE_SHARED=1
 ```
 
-**Upload blobs to the blob store**
+- Clean previous builds and compile the Wazuh Agent
+```
+make -C /tmp/blobs/wazuh-3.10.2-agent/src clean
+make -C /tmp/blobs/wazuh-3.10.2-agent/src deps
+make -C /tmp/blobs/wazuh-3.10.2-agent/src -j$(nproc) PREFIX=/var/vcap/packages/wazuh-agent TARGET=agent USE_SELINUX=0 USE_AUDIT=0 DISABLE_SHARED=1
+```
+
+  *Please note the compilation process might take some minutes to complete*
+
+  *The `-j$(nproc)` parameter makes use of all processing units available for the compilation process, feel free to customize it.*
+
+
+- Compress the precompiled Wazuh Manager and Agent
+
+```
+rm -f /tmp/blobs/wazuh-3.10.2.tar.gz
+tar -czf /tmp/blobs/wazuh-manager-3.10.2.tar.gz -C /tmp/blobs/ ./wazuh-3.10.2-manager/
+tar -czf /tmp/blobs/wazuh-agent-3.10.2.tar.gz -C /tmp/blobs/ ./wazuh-3.10.2-agent/
+```
+
+
+## Prepare the Wazuh Release
+
+- Clone repository
+
+```
+git clone https://github.com/wazuh/wazuh-bosh-pilot
+cd wazuh-bosh-pilot
+```
+
+- Update the [spec](packages/wazuh-agent/spec), [packaging](packages/wazuh-agent/packaging), and [wazuh-agent.yml](manifest/wazuh-agent.yml) files with your compiled Agent version.
+
+- Add blobs to the blobstore (it will automatically update the blobs.yml)
+
+```
+bosh add-blob /tmp/blobs/wazuh-agent-3.10.2.tar.gz wazuh-agent/wazuh-agent-3.10.2.tar.gz
+bosh add-blob /tmp/blobs/wazuh-manager-3.10.2.tar.gz wazuh-agent/wazuh-manager-3.10.2.tar.gz
+```
+
+  *This will update the `blobs.yml` file with the metadata information related to the new files*
+
+- Upload blobs to bosh director
+
 ```
 bosh upload-blobs
 ```
 
-**Create release**
+- Create the Wazuh release
+
 ```
-bosh create-release --final --version=x.y.z
+bosh create-release --name=wazuh --version=3.10.2 --final --force
 ```
 
-**Upload release**
+*Sometimes it's required to manually remove/synchronize previous Agent TAR file from blobs.yml*
+
+- Upload release to Bosh Director
+
 ```
-bosh -e your_bosh_environment upload-release
+bosh -e <your_bosh_environment> upload-release --name=wazuh --version=3.10.2
 ```
 
-## Deploy Wazuh Server
-
-Configure manifest/wazuh-manager.yml according to the number of instances you want to create.
-
-**Deploy**
-```
-bosh -e your_bosh_environment -d wazuh-manager deploy manifest/wazuh-manager.yml
-```
+Redeploy your new/active deployments to make Bosh install and configure the Wazuh Agent on target instances.
 
 ## Deploy Wazuh Agents
 
@@ -100,7 +141,7 @@ To pass your generated `sslagent.cert` and `sslagent.key` files to your runtime 
             2fG1XZEkJyAVP/wjcuGWRmIufexw/tpVF0+AADhafJwpre+9zYYFDwPeYSN11zAH
             E5KGDhqDh9hie3xnTOllHfjXbvijuqoLkNUU6HsssGFI/epA1Yfyl220ZNE5AZCL
             ...
-            -----END PRIVATE KEY-----          
+            -----END PRIVATE KEY-----
     exclude:
       deployments: [wazuh-manager]
 ```
