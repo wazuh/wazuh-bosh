@@ -6,10 +6,16 @@ PACKAGE_DIR=/var/vcap/packages/wazuh-agent
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 DATA_DIR=/var/vcap/data/wazuh-agent
 
+TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
+# Force re-registration of the Wazuh Agent if the flag "force_registration" is activated
+if [[ "<%= p("force_registration") %>" = true ]] ; then
+  cp ${JOB_DIR}/config/client.keys.sample ${PACKAGE_DIR}/etc/client.keys
+  echo "$TIMESTAMP : INFO : Overriding client.keys file to force re-registration" >> ${LOG_DIR}/setup.log
+fi
+
 # Start daemon
 while true
 do
-  TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
   # Check if the agent is registered.
   grep bosh-noregistered ${PACKAGE_DIR}/etc/client.keys
   if [[ $? -eq 0 ]] ; then
@@ -29,7 +35,7 @@ do
         echo "$TIMESTAMP : ERROR : Registration failure" >> ${LOG_DIR}/setup.log
       fi
   # Check if the agent is connected
-  else 
+  else
       . ${PACKAGE_DIR}/var/run/ossec-agentd.state
       if [ $? -eq 0 ] ; then
         if [ "$status" == "connected" ] ; then
@@ -44,6 +50,6 @@ do
         echo "$TIMESTAMP : ERROR : Agent not connected to the Manager."
       fi
   fi
-  sleep 120
+  sleep 5
 done
 exit 0

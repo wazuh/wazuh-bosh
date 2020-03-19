@@ -37,3 +37,6 @@ properties:
   wazuh_agent_key:
     description: "Agent's key path. Ex: /var/vcap/sslagent.key"
     default: ""
+  force_registration:
+    description: "Boolean that enables the re-registration of the Agent"
+    default: false
