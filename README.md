@@ -1,5 +1,13 @@
 # Wazuh for Bosh
 
+**Important note:**
+
+If you are not able to get the blobs using Git LFS you can download them from:
+
+- Wazuh Manager blob: https://s3-us-west-1.amazonaws.com/packages.wazuh.com/3.x/bosh/wazuh-manager.tar.gz
+
+- Wazuh Agent blob: https://s3-us-west-1.amazonaws.com/packages.wazuh.com/3.x/bosh/wazuh-agent.tar.gz
+
 ## Prepare release
 
 **Clone repository**
