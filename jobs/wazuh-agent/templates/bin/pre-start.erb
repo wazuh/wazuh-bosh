@@ -23,6 +23,14 @@ if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
     ln -s ${PACKAGE_DIR}/logs/ ${LOG_DIR}/wazuh_logs
 fi
 
+# Force re-registration of the Wazuh Agent if the variable "force_registration" is true
+TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
+if [[ "<%= p("force_registration") %>" = true ]] ; then
+  cp ${JOB_DIR}/config/client.keys.sample ${PACKAGE_DIR}/etc/client.keys
+  rm -f ${DATA_DIR}/etc/client.keys
+  echo "$TIMESTAMP : INFO : Overriding client.keys file to force re-registration" >> ${LOG_DIR}/setup.log
+fi
+
 if [ ! -s ${DATA_DIR}/etc/client.keys ]; then
     SSL_CREDS=""
     if  [[ "<%= p("wazuh_agent_cert") %>" != "" ]] && \
