@@ -5,11 +5,15 @@ set -u # report the usage of uninitialized variables
 
 JOB_NAME=wazuh-agent
 PACKAGE_DIR=/var/vcap/packages/wazuh-agent
+JOB_DIR=/var/vcap/jobs/$JOB_NAME
 STORE_DIR=/var/vcap/store/$JOB_NAME
 RUN_DIR=${PACKAGE_DIR}/var/run
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
-PIDFILE=${RUN_DIR}/${1}-*.pid
+PIDFILE="${RUN_DIR}/${1}-*.pid"
 
+# Load control helpers
+# shellcheck source=../helpers/pid_utils.sh
+source "${JOB_DIR}/helpers/pid_utils.sh"
 
 case $2 in
 
@@ -23,8 +27,7 @@ case $2 in
 
 
   stop)
-    kill -9 `cat $PIDFILE`
-    rm -rf $PIDFILE
+    kill_and_wait "$PIDFILE"
 
     ;;
   *)
