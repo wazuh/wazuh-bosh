@@ -13,6 +13,7 @@ templates:
   config/preloaded-vars.conf.erb: config/preloaded-vars.conf
   config/local_internal_options.conf: config/local_internal_options.conf
   config/client.keys.sample: config/client.keys.sample
+  helpers/pid_utils.sh: helpers/pid_utils.sh
 
 properties:
   wazuh_server_address:
