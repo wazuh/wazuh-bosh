@@ -68,10 +68,10 @@ function wait_pid_death() {
 
 # kill_and_wait
 #
-# @param pidfile
+# @param pid_path
 # @param timeout [default 25s]
 #
-# For a pid found in :pidfile:, send a `kill -15` TERM, then wait for :timeout: seconds to
+# For a pid found in :pid_path:, send a `kill -15` TERM, then wait for :timeout: seconds to
 # see if it dies on its own. If not, send it a `kill -9`. If the process does die,
 # exit 0 and remove the :pidfile:. If after all of this, the process does not actually
 # die, exit 1.
@@ -81,7 +81,16 @@ function wait_pid_death() {
 # Append 'with timeout {n} seconds' to monit start/stop program configs
 #
 function kill_and_wait() {
-  declare pidfile="$1" timeout="${2:-25}" sigkill_on_timeout="${3:-1}"
+  declare pid_path="$1" timeout="${2:-25}" sigkill_on_timeout="${3:-1}"
+
+  local pidfile
+  # $pid_path needs to be globbed (SC2086)
+  # shellcheck disable=SC2086
+  pidfile=$(ls $pid_path)
+  if [ -z "${pidfile}" ]; then
+    echo "No files matching ${pid_path}"
+    exit 0
+  fi
 
   if [ ! -f "${pidfile}" ]; then
     echo "Pidfile ${pidfile} doesn't exist"
