@@ -3,6 +3,7 @@ dev_releases
 releases
 releases/*.tgz
 releases/**/*.tgz
+blob/tmp
 .dev_builds
 .final_builds
 .final_builds/jobs/**/*.tgz

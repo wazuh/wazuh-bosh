@@ -1,17 +1,17 @@
 ---
   releases:
   - name: "wazuh"
-    version: 3.10.2
+    version: 4.1.5
   
   addons:
   - name: wazuh
-    release: 3.10.2
+    release: 4.1.5
     jobs:
     - name: wazuh-agent
       release: wazuh
       properties:
-          wazuh_server_address: 172.0.3.4
-          wazuh_server_registration_address: 172.0.3.4
+          wazuh_server_address: 172.31.40.195
+          wazuh_server_registration_address: 172.31.40.195
           wazuh_server_protocol: "tcp"
           wazuh_agents_prefix: "bosh-"
           wazuh_agent_profile: "generic"
