@@ -16,7 +16,8 @@ apt-get build-dep python3.5 -y
 
 ```
 cd ~
-curl -Ls https://github.com/wazuh/wazuh/archive/stable.tar.gz | tar zx
+curl -Ls https://github.com/wazuh/wazuh/archive/refs/tags/v4.1.5.tar.gz | tar xz
+#curl -Ls https://github.com/wazuh/wazuh/archive/stable.tar.gz | tar zx
 mv wazuh-*/ wazuh
 cd wazuh/src
 make deps
@@ -28,7 +29,8 @@ make deps
 cd ~
 cd wazuh/src
 make clean
-make -j8 PREFIX=/var/vcap/packages/wazuh-manager TARGET=server USE_SELINUX=0 USE_AUDIT=0
+make deps && make TARGET=server
+#make -j8 PREFIX=/var/vcap/packages/wazuh-manager TARGET=server USE_SELINUX=0 USE_AUDIT=0
 cd ../..
 tar -czvf wazuh-manager.tar.gz -C wazuh .
 ```
@@ -38,7 +40,8 @@ tar -czvf wazuh-manager.tar.gz -C wazuh .
 cd ~
 cd wazuh/src
 make clean
-make -j8 PREFIX=/var/vcap/packages/wazuh-agent TARGET=agent USE_SELINUX=0 USE_AUDIT=0
+make deps && make TARGET=agent
+#make -j8 PREFIX=/var/vcap/packages/wazuh-agent TARGET=agent USE_SELINUX=0 USE_AUDIT=0
 cd ../..
 tar -czvf wazuh-agent.tar.gz -C wazuh .
 ```
