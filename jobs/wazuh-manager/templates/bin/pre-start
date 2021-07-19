@@ -11,13 +11,18 @@ DATA_DIR=/var/vcap/data/wazuh-manager
 TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
 
 mkdir -p ${DATA_DIR}/etc
+mkdir -p /var/ossec/etc/shared/
+touch /var/ossec/etc/shared/ar.conf
+
 rm -f /etc/ossec-init.conf
 
 cp ${JOB_DIR}/config/preloaded-vars.conf ${PACKAGE_DIR}/source_code/etc/preloaded-vars.conf
 cd ${PACKAGE_DIR}/source_code
 ./install.sh
-cp ${JOB_DIR}/config/ossec.conf ${PACKAGE_DIR}/etc/
+cp ${JOB_DIR}/config/ossec.conf /var/ossec/etc/
 cp $JOB_DIR/config/sslmanager.cert $JOB_DIR/config/sslmanager.key ${PACKAGE_DIR}/etc/
+cp ${PACKAGE_DIR}/source_code/etc/internal_options.conf /var/ossec/etc/
+cp -r ${PACKAGE_DIR}/ruleset/ /var/ossec/ruleset/
 
 if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
     ln -s ${PACKAGE_DIR}/logs/ ${LOG_DIR}/wazuh_logs
