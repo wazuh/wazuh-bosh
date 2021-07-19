@@ -1,8 +1,8 @@
 /wazuh/wazuh-agent.tar.gz:
-  size: 165375755
-  object_id: d1718e9b-46d5-4a4c-548d-72b669fdf738
-  sha: sha256:f66f39fbcf1e1f8e24de4ea9684466bfa4f095af6a87c2881767e21398d0764d
+  size: 130381966
+  object_id: 9e5f10d2-68c4-4771-7b48-8bdbf9377f40
+  sha: sha256:05ff84dfc0326bd2218c83d12a9c0306729b9cf1a49ddb57098f0805eb67e58d
 /wazuh/wazuh-manager.tar.gz:
-  size: 179780982
-  object_id: e24ebcba-dec7-4446-52c5-bd41f8e8cfc2
-  sha: sha256:333cffe92147324144f9438ae75d41d61c70b6767a78699202efb7f5f3e5f0cb
+  size: 177065950
+  object_id: 2a272ad3-e727-4083-4c78-8edaa654d4bc
+  sha: sha256:b7406e35d37cbf32877648d0ab4007eeef2eb9131a6ccb227c5df2289fc5ecae
