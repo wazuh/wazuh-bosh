@@ -7,8 +7,8 @@ releases:
 
 stemcells:
 - alias: default
-  os: ubuntu-xenial
-  version: latest
+  os: ubuntu-bionic
+  version: 1.13
 
 update:
   canaries: 2
