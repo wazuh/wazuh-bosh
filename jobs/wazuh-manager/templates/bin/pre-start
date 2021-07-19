@@ -10,6 +10,11 @@ LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 DATA_DIR=/var/vcap/data/wazuh-manager
 TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
 
+apt-get install python gcc make libc6-dev curl policycoreutils automake autoconf libtool -y
+echo "deb-src http://archive.ubuntu.com/ubuntu/ $(lsb_release -cs) main" >> /etc/apt/sources.list
+apt-get update
+apt-get build-dep python3.5 -y
+
 mkdir -p ${DATA_DIR}/etc
 mkdir -p /var/ossec/etc/shared/
 touch /var/ossec/etc/shared/ar.conf
