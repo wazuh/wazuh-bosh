@@ -9,6 +9,7 @@ PACKAGE_DIR=/var/vcap/packages/wazuh-manager
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 DATA_DIR=/var/vcap/data/wazuh-manager
 TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
+INSTALL_DIR=/var/ossec
 NODE_IP=`ip -4 a show eth0 | grep inet | awk '{print $2}' | rev | cut -c4- | rev`
 
 apt-get install python gcc make libc6-dev curl policycoreutils automake autoconf libtool
@@ -21,23 +22,12 @@ cp ${JOB_DIR}/config/preloaded-vars.conf ${PACKAGE_DIR}/source_code/etc/preloade
 cd ${PACKAGE_DIR}/source_code
 ./install.sh
 cp ${JOB_DIR}/config/ossec.conf /var/ossec/etc/
-cp $JOB_DIR/config/sslmanager.cert $JOB_DIR/config/sslmanager.key ${PACKAGE_DIR}/etc/
-sed -i "s:NODE_IP:${NODE_IP}:g" /var/ossec/etc/ossec.conf
+sed -i "s:NODE_IP:${NODE_IP}:g" ${INSTALL_DIR}/etc/ossec.conf
 
 if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
     ln -s ${PACKAGE_DIR}/logs/ ${LOG_DIR}/wazuh_logs
 fi
 
-${JOB_DIR}/bin/wazuh_server_ctl ossec-authd start
-${JOB_DIR}/bin/wazuh_server_ctl wazuh-db start
-${JOB_DIR}/bin/wazuh_server_ctl ossec-execd start
-${JOB_DIR}/bin/wazuh_server_ctl ossec-analysisd start
-${JOB_DIR}/bin/wazuh_server_ctl ossec-syscheckd start
-${JOB_DIR}/bin/wazuh_server_ctl ossec-remoted start
-${JOB_DIR}/bin/wazuh_server_ctl ossec-logcollector start
-${JOB_DIR}/bin/wazuh_server_ctl ossec-monitord start
-${JOB_DIR}/bin/wazuh_server_ctl wazuh-modulesd start
-
-
+${INSTALL_DIR}/bin/ossec-control start
 
 exit 0
