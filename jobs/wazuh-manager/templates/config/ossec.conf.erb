@@ -239,8 +239,8 @@
     <ciphers>HIGH:!ADH:!EXP:!MD5:!RC4:!3DES:!CAMELLIA:@STRENGTH</ciphers>
     <!-- <ssl_agent_ca></ssl_agent_ca> -->
     <ssl_verify_host>no</ssl_verify_host>
-    <ssl_manager_cert>/var/vcap/packages/wazuh-manager/etc/sslmanager.cert</ssl_manager_cert>
-    <ssl_manager_key>/var/vcap/packages/wazuh-manager/etc/sslmanager.key</ssl_manager_key>
+    <ssl_manager_cert>/var/ossec/etc/sslmanager.cert</ssl_manager_cert>
+    <ssl_manager_key>/var/ossec/etc/sslmanager.key</ssl_manager_key>
     <ssl_auto_negotiate>no</ssl_auto_negotiate>
   </auth>
 
@@ -252,7 +252,7 @@
     <port>1516</port>
     <bind_addr>0.0.0.0</bind_addr>
     <nodes>
-        <node>NODE_IP</node>
+        <node>172.31.32.4</node>
     </nodes>
     <hidden>no</hidden>
     <disabled>no</disabled>
