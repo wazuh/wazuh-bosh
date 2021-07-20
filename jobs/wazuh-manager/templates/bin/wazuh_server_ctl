@@ -14,13 +14,17 @@ INSTALL_DIR=/var/ossec
 case $1 in
 
   start)
+    mkdir -p $RUN_DIR
+    mkdir -p $LOG_DIR
+    mkdir -p $STORE_DIR
     exec ${INSTALL_DIR}/bin/ossec-control $1
 
     ;;
 
   stop)
-    exec ${INSTALL_DIR}/bin/ossec-control $1
-
+    kill -9 `cat $PIDFILE`
+    rm -rf $PIDFILE
+    
     ;;
   *)
     echo "Usage: wazuh_server_ctl {ossec-daemon}{start|stop}"
