@@ -1,4 +1,5 @@
 check process ossec-manager
   matching "ossec-manager"
-  start program "/var/ossec/bin/ossec-control start"
-  stop program "/var/ossec/bin/ossec-control stop"
+  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+  group vcap
