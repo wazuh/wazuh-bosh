@@ -9,6 +9,7 @@ PACKAGE_DIR=/var/vcap/packages/wazuh-manager
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 DATA_DIR=/var/vcap/data/wazuh-manager
 TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
+NODE_IP=`ip -4 a show eth0 | grep inet | awk '{print $2}' | rev | cut -c4- | rev`
 
 apt-get install python gcc make libc6-dev curl policycoreutils automake autoconf libtool
 apt-get update
@@ -21,6 +22,7 @@ cd ${PACKAGE_DIR}/source_code
 ./install.sh
 cp ${JOB_DIR}/config/ossec.conf /var/ossec/etc/
 cp $JOB_DIR/config/sslmanager.cert $JOB_DIR/config/sslmanager.key ${PACKAGE_DIR}/etc/
+sed -i "s:NODE_IP:${NODE_IP}:g" /var/ossec/etc/ossec.conf
 
 if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
     ln -s ${PACKAGE_DIR}/logs/ ${LOG_DIR}/wazuh_logs
