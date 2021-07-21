@@ -21,7 +21,8 @@ rm -f /etc/ossec-init.conf
 cp ${JOB_DIR}/config/preloaded-vars.conf ${PACKAGE_DIR}/source_code/etc/preloaded-vars.conf
 cd ${PACKAGE_DIR}/source_code
 ./install.sh
-cp ${JOB_DIR}/config/ossec.conf /var/ossec/etc/
+cp ${JOB_DIR}/config/ossec.conf  ${INSTALL_DIR}/etc/
+cp $JOB_DIR/config/sslmanager.cert $JOB_DIR/config/sslmanager.key  ${INSTALL_DIR}/etc/
 sed -i "s:NODE_IP:${NODE_IP}:g" ${INSTALL_DIR}/etc/ossec.conf
 
 if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
