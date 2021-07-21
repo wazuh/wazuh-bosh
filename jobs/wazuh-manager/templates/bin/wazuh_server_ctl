@@ -22,8 +22,7 @@ case $1 in
     ;;
 
   stop)
-    kill -9 `cat $PIDFILE`
-    rm -rf $PIDFILE
+    exec ${INSTALL_DIR}/bin/ossec-control $1
     
     ;;
   *)
