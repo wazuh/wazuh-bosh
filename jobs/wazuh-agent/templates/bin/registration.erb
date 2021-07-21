@@ -4,7 +4,6 @@ JOB_NAME=wazuh-agent
 JOB_DIR=/var/vcap/jobs/$JOB_NAME
 PACKAGE_DIR=/var/vcap/packages/wazuh-agent
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
-DATA_DIR=/var/vcap/data/wazuh-agent
 INSTALL_DIR=/var/ossec
 
 # Start daemon
@@ -40,7 +39,7 @@ do
           echo "$TIMESTAMP : ERROR : Agent not connected to the Manager."  >> ${LOG_DIR}/setup.log
           ${JOB_DIR}/bin/wazuh_agent_ctl stop
           ${JOB_DIR}/bin/wazuh_agent_ctl start
-       fi
+        fi
       else
         echo "$TIMESTAMP : ERROR : Agent not connected to the Manager."
       fi

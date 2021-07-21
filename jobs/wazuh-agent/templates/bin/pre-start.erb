@@ -24,7 +24,7 @@ if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
     ln -s ${INSTALL_DIR}/logs/ ${LOG_DIR}/wazuh_logs
 fi
 
-if [ ! -s ${DATA_DIR}/etc/client.keys ]; then
+if [ ! -s ${INSTALL_DIR}/etc/client.keys ]; then
     SSL_CREDS=""
     if  [[ "<%= p("wazuh_agent_cert") %>" != "" ]] && \
         [[ "<%= p("wazuh_agent_key") %>" != "" ]] ; then
