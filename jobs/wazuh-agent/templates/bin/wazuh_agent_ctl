@@ -10,24 +10,25 @@ STORE_DIR=/var/vcap/store/$JOB_NAME
 RUN_DIR=${PACKAGE_DIR}/var/run
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 PIDFILE="${RUN_DIR}/${1}-*.pid"
+INSTALL_DIR=/var/ossec
 
 # Load control helpers
 # shellcheck source=../helpers/pid_utils.sh
 source "${JOB_DIR}/helpers/pid_utils.sh"
 
-case $2 in
+case $1 in
 
   start)
     mkdir -p $RUN_DIR
     mkdir -p $LOG_DIR
     mkdir -p $STORE_DIR
-    exec ${PACKAGE_DIR}/bin/$1
+    exec ${INSTALL_DIR}/bin/ossec-control $1
 
     ;;
 
 
   stop)
-    kill_and_wait "$PIDFILE"
+    exec ${INSTALL_DIR}/bin/ossec-control $1
 
     ;;
   *)

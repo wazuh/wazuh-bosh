@@ -9,50 +9,47 @@ PACKAGE_DIR=/var/vcap/packages/wazuh-agent
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 DATA_DIR=/var/vcap/data/wazuh-agent
 TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
+INSTALL_DIR=/var/ossec
 
-mkdir -p ${DATA_DIR}/etc
+mkdir -p ${INSTALL_DIR}/etc
 rm -f /etc/ossec-init.conf
 
 cp ${JOB_DIR}/config/preloaded-vars.conf ${PACKAGE_DIR}/source_code/etc/preloaded-vars.conf
 cd ${PACKAGE_DIR}/source_code
 ./install.sh
-cp ${JOB_DIR}/config/ossec.conf ${PACKAGE_DIR}/etc/
-cp ${JOB_DIR}/config/local_internal_options.conf ${PACKAGE_DIR}/etc/
+cp ${JOB_DIR}/config/ossec.conf ${INSTALL_DIR}/etc/
+cp ${JOB_DIR}/config/local_internal_options.conf ${INSTALL_DIR}/etc/
 
 if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
-    ln -s ${PACKAGE_DIR}/logs/ ${LOG_DIR}/wazuh_logs
+    ln -s ${INSTALL_DIR}/logs/ ${LOG_DIR}/wazuh_logs
 fi
 
 if [ ! -s ${DATA_DIR}/etc/client.keys ]; then
     SSL_CREDS=""
     if  [[ "<%= p("wazuh_agent_cert") %>" != "" ]] && \
         [[ "<%= p("wazuh_agent_key") %>" != "" ]] ; then
-        echo "<%= p("wazuh_agent_cert") %>" > ${PACKAGE_DIR}/etc/sslagent.cert
-        echo "<%= p("wazuh_agent_key") %>" > ${PACKAGE_DIR}/etc/sslagent.key
-        chown root:root ${PACKAGE_DIR}/etc/sslagent.cert ${PACKAGE_DIR}/etc/sslagent.key
-        chmod 400 ${PACKAGE_DIR}/etc/sslagent.cert ${PACKAGE_DIR}/etc/sslagent.key
+        echo "<%= p("wazuh_agent_cert") %>" > ${INSTALL_DIR}/etc/sslagent.cert
+        echo "<%= p("wazuh_agent_key") %>" > ${INSTALL_DIR}/etc/sslagent.key
+        chown root:root ${INSTALL_DIR}/etc/sslagent.cert ${INSTALL_DIR}/etc/sslagent.key
+        chmod 400 ${INSTALL_DIR}/etc/sslagent.cert ${INSTALL_DIR}/etc/sslagent.key
         echo "$TIMESTAMP : INFO : Agent cert and key imported succesfully" >> ${LOG_DIR}/setup.log
-        SSL_CREDS="-x ${PACKAGE_DIR}/etc/sslagent.cert -k ${PACKAGE_DIR}/etc/sslagent.key"
+        SSL_CREDS="-x ${INSTALL_DIR}/etc/sslagent.cert -k ${INSTALL_DIR}/etc/sslagent.key"
     fi
     if ${PACKAGE_DIR}/bin/agent-auth -m "<%= p("wazuh_server_registration_address") %>" -A "<%= p("wazuh_agents_prefix") %>"`hostname` $SSL_CREDS
     then
-      cp ${PACKAGE_DIR}/etc/client.keys ${DATA_DIR}/etc/
+      cp ${PACKAGE_DIR}/etc/client.keys ${INSTALL_DIR}/etc/
       echo "$TIMESTAMP : INFO : Registration success" >> ${LOG_DIR}/setup.log
     else
-      cp ${JOB_DIR}/config/client.keys.sample ${PACKAGE_DIR}/etc/client.keys
+      cp ${JOB_DIR}/config/client.keys.sample ${INSTALL_DIR}/etc/client.keys
       echo "$TIMESTAMP : ERROR : Registration failure" >> ${LOG_DIR}/setup.log
     fi
 
 else
-    cp ${DATA_DIR}/etc/client.keys ${PACKAGE_DIR}/etc/
+    cp ${DATA_DIR}/etc/client.keys ${INSTALL_DIR}/etc/
     echo "$TIMESTAMP : INFO : Agent was already registered" >> ${LOG_DIR}/setup.log
 fi
 
-${JOB_DIR}/bin/wazuh_agent_ctl ossec-agentd start
-${JOB_DIR}/bin/wazuh_agent_ctl ossec-execd start
-${JOB_DIR}/bin/wazuh_agent_ctl ossec-syscheckd start
-${JOB_DIR}/bin/wazuh_agent_ctl ossec-logcollector start
-${JOB_DIR}/bin/wazuh_agent_ctl wazuh-modulesd start
+${JOB_DIR}/bin/wazuh_agent_ctl start
 
 # Start registration daemons
 $JOB_DIR/bin/registration.sh &

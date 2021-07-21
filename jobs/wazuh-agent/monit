@@ -1,30 +1,30 @@
 check process ossec-execd
   matching "ossec-execd"
-  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-execd start"
-  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-execd stop"
+  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl start"
+  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl stop"
   group vcap
 
 check process ossec-agentd
   matching "ossec-agentd"
-  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-agentd start"
-  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-agentd stop"
+  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl start"
+  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl stop"
   group vcap
 
 check process ossec-logcollector
   matching "ossec-logcollector"
-  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-logcollector start"
-  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-logcollector stop"
+  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl start"
+  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl stop"
   group vcap
 
 
 check process ossec-syscheckd
   matching "ossec-syscheckd"
-  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-syscheckd start"
-  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl ossec-syscheckd stop"
+  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl start"
+  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl stop"
   group vcap
   
 check process wazuh-modulesd
   matching "wazuh-modulesd"
-  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl wazuh-modulesd start"
-  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl wazuh-modulesd stop"
+  start program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl start"
+  stop program "/var/vcap/jobs/wazuh-agent/bin/wazuh_agent_ctl stop"
   group vcap  
