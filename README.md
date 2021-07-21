@@ -1,19 +1,12 @@
 # Wazuh for Bosh
 
-**Important note:**
-
-If you are not able to get the blobs using Git LFS you can download them from:
-
-- Wazuh Manager blob: https://s3-us-west-1.amazonaws.com/packages.wazuh.com/3.x/bosh/wazuh-manager.tar.gz
-
-- Wazuh Agent blob: https://s3-us-west-1.amazonaws.com/packages.wazuh.com/3.x/bosh/wazuh-agent.tar.gz
-
 ## Prepare release
 
-**Clone repository**
+**Clone repository and checkout to branch 4.1**
 ```
 git clone https://github.com/wazuh/wazuh-bosh
 cd wazuh-bosh
+git checkout 4.1
 ```
 
 **Install Git LFS (Ubuntu/Debian)**
@@ -40,7 +33,7 @@ bosh upload-blobs
 
 **Create release**
 ```
-bosh create-release --final --version=x.y.z
+bosh create-release --final --version=4.1.5
 ```
 
 **Upload release**
@@ -55,6 +48,43 @@ Configure manifest/wazuh-manager.yml according to the number of instances you wa
 **Deploy**
 ```
 bosh -e your_bosh_environment -d wazuh-manager deploy manifest/wazuh-manager.yml
+```
+
+**Check deployment status**
+
+Get instance name.
+```
+bosh -e your_bosh_environment vms
+```
+If the deployment succeeded the **Process State** will be **running**.
+
+For further checks connect to the instance using ssh and the Instance Name obtained in the previous command.
+```
+bosh -e your_bosh_environment -d wazuh-manager ssh InstanceName
+```
+Check Wazuh Manager status.
+```
+sudo -i
+/var/ossec/bin/ossec-control status
+```
+The result must be like this:
+```
+wazuh-clusterd is running...
+wazuh-modulesd is running...
+ossec-monitord is running...
+ossec-logcollector is running...
+ossec-remoted is running...
+ossec-syscheckd is running...
+ossec-analysisd is running...
+ossec-maild not running...
+ossec-execd is running...
+wazuh-db is running...
+ossec-authd is running...
+ossec-agentlessd not running...
+ossec-integratord not running...
+ossec-dbd not running...
+ossec-csyslogd not running...
+wazuh-apid is running...
 ```
 
 ## Deploy Wazuh Agents
@@ -72,7 +102,7 @@ Redeploy your initial manifest to make Bosh install and configure the Wazuh Agen
 
 ### Deploy Wazuh Agents using SSL
 
-You can register your Wazuh Agents using SSL  to secure the communication as described in [Agent verification using SSL](https://documentation.wazuh.com/3.9/user-manual/registering/manager-verification/agents/linux-unix-agent-verification.html#linux-and-unix-agents)
+You can register your Wazuh Agents using SSL  to secure the communication as described in [Agent verification using SSL](https://documentation.wazuh.com/current/user-manual/registering/host-verification-registration.html#available-options-to-verify-the-hosts)
 
 To pass your generated `sslagent.cert` and `sslagent.key` files to your runtime configuration you simply have to include them in `wazuh_agent_cert` and `wazuh_agent_key` parameters like in the following example:
 
@@ -81,17 +111,17 @@ To pass your generated `sslagent.cert` and `sslagent.key` files to your runtime 
 ---
   releases:
   - name: "wazuh"
-    version: 3.10.2
+    version: 4.1.5
 
   addons:
   - name: wazuh
-    release: 3.10.2
+    release: 4.1.5
     jobs:
     - name: wazuh-agent
       release: wazuh
       properties:
-          wazuh_server_address: 172.0.3.4
-          wazuh_server_registration_address: 172.0.3.4
+          wazuh_server_address: 172.31.32.4
+          wazuh_server_registration_address: 172.31.32.4
           wazuh_server_protocol: "tcp"
           wazuh_agents_prefix: "bosh-"
           wazuh_agent_profile: "generic"
@@ -119,7 +149,7 @@ Then, update your runtime configuration by executing:
 bosh -e your_bosh_environment update-runtime-config --name=wazuh-agent-addons manifest/wazuh-agent.yml
 ```
 
-This way, your cert and key will be rendered under `/var/vcap/data/packages/wazuh-agent/<random_id>/etc/` and used in the registration process and any communications between the Agent and Manager.
+This way, your cert and key will be rendered under `/var/ossec/<random_id>/etc/` and used in the registration process and any communications between the Agent and Manager.
 
 ## General usage notes
 
