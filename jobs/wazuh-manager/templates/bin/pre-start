@@ -7,16 +7,14 @@ JOB_NAME=wazuh-manager
 JOB_DIR=/var/vcap/jobs/$JOB_NAME
 PACKAGE_DIR=/var/vcap/packages/wazuh-manager
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
-DATA_DIR=/var/vcap/data/wazuh-manager
 TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
 INSTALL_DIR=/var/ossec
 NODE_IP=<%= spec.ip %>
-#NODE_IP=`ip -4 a show eth0 | grep inet | awk '{print $2}' | rev | cut -c4- | rev`
 
 apt-get install python gcc make libc6-dev curl policycoreutils automake autoconf libtool
 apt-get update
 
-mkdir -p ${DATA_DIR}/etc
+mkdir -p ${INSTALL_DIR}/etc
 rm -f /etc/ossec-init.conf
 
 cp ${JOB_DIR}/config/preloaded-vars.conf ${PACKAGE_DIR}/source_code/etc/preloaded-vars.conf

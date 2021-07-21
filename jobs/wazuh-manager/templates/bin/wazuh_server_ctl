@@ -8,7 +8,6 @@ PACKAGE_DIR=/var/vcap/packages/wazuh-manager
 STORE_DIR=/var/vcap/store/$JOB_NAME
 RUN_DIR=${PACKAGE_DIR}/var/run
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
-PIDFILE=${RUN_DIR}/${1}-*.pid
 INSTALL_DIR=/var/ossec
 
 case $1 in
