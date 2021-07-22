@@ -3,9 +3,9 @@
 set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
-JOB_NAME=wazuh-manager
+JOB_NAME=wazuh-manager-worker
 JOB_DIR=/var/vcap/jobs/$JOB_NAME
-PACKAGE_DIR=/var/vcap/packages/wazuh-manager
+PACKAGE_DIR=/var/vcap/packages/wazuh-manager-worker
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
 TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
 INSTALL_DIR=/var/ossec
