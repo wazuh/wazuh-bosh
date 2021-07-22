@@ -16,4 +16,6 @@
           wazuh_agents_prefix: "bosh-"
           wazuh_agent_profile: "generic"
     exclude:
-      deployments: [wazuh-manager]
+      deployments: 
+      - wazuh-manager
+      - wazuh-manager-worker
