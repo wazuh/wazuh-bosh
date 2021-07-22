@@ -1,0 +1,33 @@
+---
+name: wazuh-manager-worker
+
+releases:
+- name: wazuh
+  version: 4.1.5
+
+stemcells:
+- alias: default
+  os: ubuntu-bionic
+  version: 1.13
+
+update:
+  canaries: 2
+  max_in_flight: 1
+  canary_watch_time: 5000-60000
+  update_watch_time: 5000-60000
+
+instance_groups:
+- name: wazuh-manager-worker
+  azs: [z1]
+  instances: 1
+  jobs:
+  - name: wazuh-manager-worker
+    release: wazuh
+  vm_type: default
+  stemcell: default
+  disk_size: 10240
+  networks:
+  - name: default
+  properties:
+    cluster_key: "d683ecbf1f357cba8c86594dd0094a0c"
+    wazuh_master_address: 172.31.32.4 
