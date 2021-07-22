@@ -17,11 +17,11 @@ update:
   update_watch_time: 5000-60000
 
 instance_groups:
-- name: wazuh-manager
+- name: wazuh-manager-worker
   azs: [z1]
   instances: 1
   jobs:
-  - name: wazuh-manager
+  - name: wazuh-manager-worker
     release: wazuh
   vm_type: default
   stemcell: default
