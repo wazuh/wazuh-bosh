@@ -4,7 +4,7 @@ set -e # exit immediately if a simple command exits with a non-zero status
 set -u # report the usage of uninitialized variables
 
 JOB_NAME=wazuh-manager-worker
-PACKAGE_DIR=/var/vcap/packages/wazuh-manager-worker
+PACKAGE_DIR=/var/vcap/packages/wazuh-manager
 STORE_DIR=/var/vcap/store/$JOB_NAME
 RUN_DIR=${PACKAGE_DIR}/var/run
 LOG_DIR=/var/vcap/sys/log/$JOB_NAME
