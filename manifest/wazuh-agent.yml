@@ -12,7 +12,7 @@
       properties:
           wazuh_server_address: 172.31.32.4 
           wazuh_server_registration_address: 172.31.32.4
-          wazuh_server_worker_address:
+          wazuh_server_worker_address: 172.31.32.4
           wazuh_server_protocol: "tcp"
           wazuh_agents_prefix: "bosh-"
           wazuh_agent_profile: "generic"
