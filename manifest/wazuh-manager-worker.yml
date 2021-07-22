@@ -31,3 +31,4 @@ instance_groups:
   properties:
     cluster_key: "d683ecbf1f357cba8c86594dd0094a0c"
     wazuh_master_address: 172.31.32.4 
+    
