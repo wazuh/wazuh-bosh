@@ -28,12 +28,12 @@ git lfs pull
 
 **Upload blobs to the blob store**
 ```
-bosh upload-blobs
+bosh -e your_bosh_environment upload-blobs
 ```
 
 **Create release**
 ```
-bosh create-release --final --version=4.1.5
+bosh -e your_bosh_environment create-release --final --version=4.1.5
 ```
 
 **Upload release**
@@ -89,7 +89,12 @@ wazuh-apid is running...
 
 ## Deploy Wazuh Agents
 
-Obtain the address of your recently deployed Wazuh Manager and update the `wazuh_server_address` and `wazuh_server_address` settings in the [manifest/wazuh-agent.yml](https://github.com/wazuh/wazuh-bosh/blob/master/manifest/wazuh-agent.yml) runtime configuration file.
+Obtain the address of your recently deployed Wazuh Manager and update the `wazuh_server_address` and `wazuh_server_registration_address` settings in the [manifest/wazuh-agent.yml](https://github.com/wazuh/wazuh-bosh/blob/4.1/manifest/wazuh-agent.yml) runtime configuration file.
+
+Use the following command to obtain the IP:
+```
+bosh -e your_bosh_environment vms
+```
 
 Update your Director runtime configuration by executing:
 
@@ -150,6 +155,27 @@ bosh -e your_bosh_environment update-runtime-config --name=wazuh-agent-addons ma
 ```
 
 This way, your cert and key will be rendered under `/var/ossec/<random_id>/etc/` and used in the registration process and any communications between the Agent and Manager.
+
+## Delete 
+**Manager deployment**
+```
+bosh -e your_bosh_environment -d wazuh-manager deld
+```
+**Agent Deployment**
+```
+bosh -e your_bosh_environment update-runtime-config --name=wazuh-agent-addons manifest/wazuh-agent-delete.yml
+```
+**Wazuh Release**
+```
+bosh -e your_bosh_environment delete-release wazuh/4.1.5
+rm -rf dev_releases/wazuh/
+rm -rf releases/wazuh/
+```
+**Blobs**
+```
+bosh remove-blob /wazuh/wazuh-agent.tar.gz
+bosh remove-blob /wazuh/wazuh-manager.tar.gz
+```
 
 ## General usage notes
 
