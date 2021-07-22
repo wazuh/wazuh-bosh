@@ -1,0 +1,24 @@
+---
+name: wazuh-manager
+
+packages:
+- wazuh-manager
+
+templates:
+  bin/pre-start: bin/pre-start
+  bin/wazuh_server_ctl: bin/wazuh_server_ctl
+  config/ossec.conf.erb: config/ossec.conf
+  config/sslmanager.cert: config/sslmanager.cert
+  config/sslmanager.key: config/sslmanager.key
+  config/preloaded-vars.conf: config/preloaded-vars.conf
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+
+properties:
+  sslmanager_key:
+    description: SSL manager private key
+  sslmanager_cert:
+    description: SSL manager certificate
+  cluster_key:
+    description: "Set the Wazuh cluster key # https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/cluster.html#cluster-key"
+    default: "d683ecbf1f357cba8c86594dd0094a0c"

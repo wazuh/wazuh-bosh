@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -e # exit immediately if a simple command exits with a non-zero status
+set -u # report the usage of uninitialized variables
+
+JOB_NAME=wazuh-manager
+JOB_DIR=/var/vcap/jobs/$JOB_NAME
+PACKAGE_DIR=/var/vcap/packages/wazuh-manager
+LOG_DIR=/var/vcap/sys/log/$JOB_NAME
+TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
+INSTALL_DIR=/var/ossec
+
+apt-get install python gcc make libc6-dev curl policycoreutils automake autoconf libtool
+apt-get update
+
+mkdir -p ${INSTALL_DIR}/etc
+rm -f /etc/ossec-init.conf
+
+cp ${JOB_DIR}/config/preloaded-vars.conf ${PACKAGE_DIR}/source_code/etc/preloaded-vars.conf
+cd ${PACKAGE_DIR}/source_code
+./install.sh
+cp ${JOB_DIR}/config/ossec.conf  ${INSTALL_DIR}/etc/
+cp $JOB_DIR/config/sslmanager.cert $JOB_DIR/config/sslmanager.key  ${INSTALL_DIR}/etc/
+
+if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
+    ln -s ${PACKAGE_DIR}/logs/ ${LOG_DIR}/wazuh_logs
+fi
+
+${INSTALL_DIR}/bin/ossec-control start
+
+exit 0
