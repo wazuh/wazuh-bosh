@@ -1,5 +1,5 @@
 ---
-name: wazuh-manager
+name: wazuh-manager-worker
 
 releases:
 - name: wazuh
