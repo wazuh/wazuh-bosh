@@ -17,7 +17,13 @@ rm -f /etc/ossec-init.conf
 cp ${JOB_DIR}/config/preloaded-vars.conf ${PACKAGE_DIR}/source_code/etc/preloaded-vars.conf
 cd ${PACKAGE_DIR}/source_code
 ./install.sh
-cp ${JOB_DIR}/config/ossec.conf ${INSTALL_DIR}/etc/
+
+if [ "<%= p("wazuh_multinode") %>" = true ]; then 
+    cp ${JOB_DIR}/config/ossec_cluster.conf ${INSTALL_DIR}/etc/ossec.conf
+elif [ "<%= p("wazuh_multinode") %>" = false ]; then 
+    cp ${JOB_DIR}/config/ossec.conf ${INSTALL_DIR}/etc/
+fi
+
 cp ${JOB_DIR}/config/local_internal_options.conf ${INSTALL_DIR}/etc/
 
 if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
