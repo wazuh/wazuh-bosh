@@ -9,6 +9,48 @@ cd wazuh-bosh
 git checkout 4.1
 ```
 
+**Single or Multi Node Wazuh Cluster**
+
+First of all it will be neccessary to determine the kind of deployment. If it is a Multi Node Cluster with more than one Worker Node there will be some changes to apply prior to the Release creation:
+- In [manifest/wazuh-agent-cluster.yml](https://github.com/wazuh/wazuh-bosh/blob/4.1/manifest/wazuh-agent-cluster.yml) add a new property (wazuh_server_worker_address_#) for each extra worker node. The IPs can be assigned before the deployment. Example:
+```yaml
+      properties:
+          wazuh_server_address: 172.31.32.4 
+          wazuh_server_registration_address: 172.31.32.4
+          wazuh_server_worker_address: 172.31.32.5
+          wazuh_server_worker_address_2: 172.31.32.6
+          wazuh_server_worker_address_3: 172.31.32.7
+          wazuh_server_protocol: "tcp"
+          wazuh_agents_prefix: "bosh-"
+          wazuh_agent_profile: "generic"
+          wazuh_multinode: true
+```
+
+- Add another server tag for each extra worker node on [jobs/wazuh-agent/templates/config/ossec_cluster.conf.erb](https://github.com/wazuh/wazuh-bosh/blob/4.1/jobs/wazuh-agent/templates/config/ossec_cluster.conf.erb). Example:
+```xml
+    <server>
+      <address><%= p("wazuh_server_worker_address") %></address>
+      <port>1514</port>
+      <protocol><%= p("wazuh_server_protocol") %></protocol>
+    </server>
+    <server>
+      <address><%= p("wazuh_server_worker_address_2") %></address>
+      <port>1514</port>
+      <protocol><%= p("wazuh_server_protocol") %></protocol>
+    </server>
+    <server>
+      <address><%= p("wazuh_server_worker_address_3") %></address>
+      <port>1514</port>
+      <protocol><%= p("wazuh_server_protocol") %></protocol>
+    </server>
+    <server>
+      <address><%= p("wazuh_server_address") %></address>
+      <port>1514</port>
+      <protocol><%= p("wazuh_server_protocol") %></protocol>
+    </server>
+```
+Where **wazuh_server_worker_address_2** and **wazuh_server_worker_address_3** are the properties added on the previous step.
+
 **Install Git LFS (Ubuntu/Debian)**
 ```
 curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
@@ -43,9 +85,8 @@ bosh -e your_bosh_environment upload-release
 
 ## Deploy Wazuh Server
 
-Configure manifest/wazuh-manager.yml according to the number of instances you want to create.
-
-**Deploy**
+**Deploy Master Node**
+Execute the following command to deploy the Master Node:
 ```
 bosh -e your_bosh_environment -d wazuh-manager deploy manifest/wazuh-manager.yml
 ```
@@ -87,9 +128,28 @@ ossec-csyslogd not running...
 wazuh-apid is running...
 ```
 
+**Deploy Worker Node**
+
+Execute this step only if you need to deploy a multi-node Wazuh Cluster.
+Configure [manifest/wazuh-manager-worker.yml](https://github.com/wazuh/wazuh-bosh/blob/4.1/manifest/wazuh-manager-worker.yml) according to the number of **instances** you want to create.
+
+Obtain the address of your recently deployed Wazuh Manager and update the `wazuh_master_address` setting in the [manifest/wazuh-manager-worker.yml](https://github.com/wazuh/wazuh-bosh/blob/4.1/manifest/wazuh-manager-worker.yml) runtime configuration file.
+Use the following command to obtain the IP:
+```
+bosh -e your_bosh_environment vms
+```
+
+Execute the following command to deploy the Worker Node:
+```
+bosh -e your_bosh_environment -d wazuh-manager-worker deploy manifest/wazuh-manager-worker.yml
+```
 ## Deploy Wazuh Agents
 
+**Single Node Wazuh Cluster**
+
 Obtain the address of your recently deployed Wazuh Manager and update the `wazuh_server_address` and `wazuh_server_registration_address` settings in the [manifest/wazuh-agent.yml](https://github.com/wazuh/wazuh-bosh/blob/4.1/manifest/wazuh-agent.yml) runtime configuration file.
+
+**NOTE: `wazuh_server_worker_address` will not be used in this deployment but it must have a value.**
 
 Use the following command to obtain the IP:
 ```
@@ -104,6 +164,24 @@ bosh -e your_bosh_environment update-runtime-config --name=wazuh-agent-addons ma
 
 Redeploy your initial manifest to make Bosh install and configure the Wazuh Agent on target instances.
 
+**Multi Node Wazuh Cluster**
+Obtain the address of your recently deployed Wazuh Manager Master and Worker nodes and update the following settings in the [manifest/wazuh-agent-cluster.yml](https://github.com/wazuh/wazuh-bosh/blob/4.1/manifest/wazuh-agent-cluster.yml) runtime configuration file.
+- `wazuh_server_address` (Master Node IP)
+- `wazuh_server_registration_address` (Master Node IP) 
+- `wazuh_server_worker_address` (Worker Node IP). If there are more than one worker nodes assign the values to the `wazuh_server_worker_address_#` properties.
+
+Use the following command to obtain the IP:
+```
+bosh -e your_bosh_environment vms
+```
+
+Update your Director runtime configuration by executing:
+
+```
+bosh -e your_bosh_environment update-runtime-config --name=wazuh-agent-addons manifest/wazuh-agent-cluster.yml
+```
+
+Redeploy your initial manifest to make Bosh install and configure the Wazuh Agent on target instances.
 
 ### Deploy Wazuh Agents using SSL
 
@@ -127,6 +205,7 @@ To pass your generated `sslagent.cert` and `sslagent.key` files to your runtime 
       properties:
           wazuh_server_address: 172.31.32.4
           wazuh_server_registration_address: 172.31.32.4
+          wazuh_server_worker_address: 172.31.32.5
           wazuh_server_protocol: "tcp"
           wazuh_agents_prefix: "bosh-"
           wazuh_agent_profile: "generic"
@@ -156,8 +235,12 @@ bosh -e your_bosh_environment update-runtime-config --name=wazuh-agent-addons ma
 
 This way, your cert and key will be rendered under `/var/ossec/<random_id>/etc/` and used in the registration process and any communications between the Agent and Manager.
 
-## Delete 
-**Manager deployment**
+## Delete Procedure
+**Manager Worker deployment**
+```
+bosh -e your_bosh_environment -d wazuh-manager-worker deld
+```
+**Manager Master deployment**
 ```
 bosh -e your_bosh_environment -d wazuh-manager deld
 ```
