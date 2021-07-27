@@ -6,7 +6,7 @@
 ```
 git clone https://github.com/wazuh/wazuh-bosh
 cd wazuh-bosh
-git checkout v4.1.5
+git checkout 4.1
 ```
 
 **Single or Multi Node Wazuh Cluster**
