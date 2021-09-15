@@ -12,6 +12,21 @@ TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
 INSTALL_DIR=/var/ossec
 
 mkdir -p ${INSTALL_DIR}/etc
+if [ ! -d "/var/vcap/data/wazuh-agent/etc/" ]; then
+  mkdir -p /var/vcap/data/wazuh-agent/etc/
+  echo "Directory /var/vcap/data/wazuh-agent/etc/"
+fi
+
+if [ ! -d "/var/vcap/packages/wazuh-agent/etc/" ]; then
+  mkdir -p /var/vcap/packages/wazuh-agent/etc/
+  echo "Directory /var/vcap/packages/wazuh-agent/etc/"
+fi
+
+if [ ! -d "/var/vcap/packages/wazuh-agent/bin" ]; then
+  mkdir -p /var/vcap/packages/wazuh-agent/bin
+  echo "Directory /var/vcap/packages/wazuh-agent/bin"
+fi
+
 rm -f /etc/ossec-init.conf
 
 cp ${JOB_DIR}/config/preloaded-vars.conf ${PACKAGE_DIR}/source_code/etc/preloaded-vars.conf
