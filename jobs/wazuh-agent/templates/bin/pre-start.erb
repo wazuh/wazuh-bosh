@@ -18,9 +18,9 @@ cp ${JOB_DIR}/config/preloaded-vars.conf ${PACKAGE_DIR}/source_code/etc/preloade
 cd ${PACKAGE_DIR}/source_code
 ./install.sh
 
-if [ "<%= p("wazuh_multinode") %>" = true ]; then 
+if [ "false" = true ]; then 
     cp ${JOB_DIR}/config/ossec_cluster.conf ${INSTALL_DIR}/etc/ossec.conf
-elif [ "<%= p("wazuh_multinode") %>" = false ]; then 
+elif [ "false" = false ]; then 
     cp ${JOB_DIR}/config/ossec.conf ${INSTALL_DIR}/etc/
 fi
 
@@ -30,20 +30,19 @@ if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
     ln -s ${INSTALL_DIR}/logs/ ${LOG_DIR}/wazuh_logs
 fi
 
-if [ ! -s ${INSTALL_DIR}/etc/client.keys ]; then
+if [ ! -s ${DATA_DIR}/etc/client.keys ]; then
     SSL_CREDS=""
-    if  [[ "<%= p("wazuh_agent_cert") %>" != "" ]] && \
-        [[ "<%= p("wazuh_agent_key") %>" != "" ]] ; then
-        echo "<%= p("wazuh_agent_cert") %>" > ${INSTALL_DIR}/etc/sslagent.cert
-        echo "<%= p("wazuh_agent_key") %>" > ${INSTALL_DIR}/etc/sslagent.key
+    if  [[ "" != "" ]] && \
+        [[ "" != "" ]] ; then
+        echo "" > ${INSTALL_DIR}/etc/sslagent.cert
+        echo "" > ${INSTALL_DIR}/etc/sslagent.key
         chown root:root ${INSTALL_DIR}/etc/sslagent.cert ${INSTALL_DIR}/etc/sslagent.key
         chmod 400 ${INSTALL_DIR}/etc/sslagent.cert ${INSTALL_DIR}/etc/sslagent.key
         echo "$TIMESTAMP : INFO : Agent cert and key imported succesfully" >> ${LOG_DIR}/setup.log
         SSL_CREDS="-x ${INSTALL_DIR}/etc/sslagent.cert -k ${INSTALL_DIR}/etc/sslagent.key"
     fi
-    if ${INSTALL_DIR}/bin/agent-auth -m "<%= p("wazuh_server_registration_address") %>" -A "<%= p("wazuh_agents_prefix") %>"`hostname` $SSL_CREDS
+    if ${INSTALL_DIR}/bin/agent-auth -m "172.31.32.4" -A "bosh-"`hostname` $SSL_CREDS
     then
-      cp ${PACKAGE_DIR}/etc/client.keys ${INSTALL_DIR}/etc/
       echo "$TIMESTAMP : INFO : Registration success" >> ${LOG_DIR}/setup.log
     else
       cp ${JOB_DIR}/config/client.keys.sample ${INSTALL_DIR}/etc/client.keys
