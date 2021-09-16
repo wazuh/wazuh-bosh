@@ -9,7 +9,7 @@ WAZUH_LOG_DIR=/var/ossec/logs
 TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
 
 # Checking connection
-sleep 5
+sleep 45
 if grep "Connected to the server" ${WAZUH_LOG_DIR}/ossec.log > /dev/null; then
   echo "$TIMESTAMP : INFO : Agent successfully installed, registered, and connected to the manager."  >> ${LOG_DIR}/setup.log
 else
