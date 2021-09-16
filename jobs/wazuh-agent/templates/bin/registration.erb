@@ -14,11 +14,11 @@ do
   grep bosh-noregistered ${INSTALL_DIR}/etc/client.keys
   if [[ $? -eq 0 ]] ; then
       SSL_CREDS=""
-      if  [[ "" != "" ]] && \
-        [[ "" != "" ]] ; then
+      if  [[ "<%= p("wazuh_agent_cert") %>" != "" ]] && \
+        [[ "<%= p("wazuh_agent_key") %>" != "" ]] ; then
         SSL_CREDS="-x ${INSTALL_DIR}/etc/sslagent.cert -k ${INSTALL_DIR}/etc/sslagent.key"
       fi
-      if ${INSTALL_DIR}/bin/agent-auth -m 172.31.32.4 -A bosh-`hostname` $SSL_CREDS
+      if ${INSTALL_DIR}/bin/agent-auth -m <%= p("wazuh_server_registration_address") %> -A <%= p("wazuh_agents_prefix") %>`hostname` $SSL_CREDS
       then
         cp ${PACKAGE_DIR}/etc/client.keys ${INSTALL_DIR}/etc/
         echo "$TIMESTAMP : INFO : Registration success"  >> ${LOG_DIR}/setup.log
