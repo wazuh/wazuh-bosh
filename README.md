@@ -165,6 +165,7 @@ bosh -e your_bosh_environment update-runtime-config --name=wazuh-agent-addons ma
 Redeploy your initial manifest to make Bosh install and configure the Wazuh Agent on target instances.
 
 **Multi Node Wazuh Cluster**
+
 Obtain the address of your recently deployed Wazuh Manager Master and Worker nodes and update the following settings in the [manifest/wazuh-agent-cluster.yml](https://github.com/wazuh/wazuh-bosh/blob/4.1/manifest/wazuh-agent-cluster.yml) runtime configuration file.
 - `wazuh_server_address` (Master Node IP)
 - `wazuh_server_registration_address` (Master Node IP) 
