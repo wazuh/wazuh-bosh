@@ -54,43 +54,43 @@ check process wazuh-db
   stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
   group vcap
 
-check process wazuh-dbd
-  matching "wazuh-dbd"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
-  group vcap
+#check process wazuh-dbd
+#  matching "wazuh-dbd"
+#  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+#  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+#  group vcap
 
-check process wazuh-clusterd
-  matching "wazuh-clusterd"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
-  group vcap
+#check process wazuh-clusterd
+#  matching "wazuh-clusterd"
+#  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+#  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+#  group vcap
 
-check process wazuh-maild
-  matching "wazuh-maild"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
-  group vcap
+#check process wazuh-maild
+#  matching "wazuh-maild"
+#  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+#  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+#  group vcap
 
-check process wazuh-agentlessd
-  matching "wazuh-agentlessd"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
-  group vcap
+#check process wazuh-agentlessd
+#  matching "wazuh-agentlessd"
+#  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+#  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+#  group vcap
 
-check process wazuh-integratord
-  matching "wazuh-integratord"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
-  group vcap
+#check process wazuh-integratord
+#  matching "wazuh-integratord"
+#  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+#  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+#  group vcap
 
-check process wazuh-csyslogd
-  matching "wazuh-csyslogd"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
-  group vcap
+#check process wazuh-csyslogd
+#  matching "wazuh-csyslogd"
+#  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+#  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+#  group vcap
 
-  check process wazuh-apid
+check process wazuh-apid
   matching "wazuh-apid"
   start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
   stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"

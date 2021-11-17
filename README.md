@@ -106,7 +106,7 @@ bosh -e your_bosh_environment -d wazuh-manager ssh InstanceName
 Check Wazuh Manager status.
 ```
 sudo -i
-/var/ossec/bin/ossec-control status
+/var/ossec/bin/wazuh-control status
 ```
 The result must be like this:
 ```
