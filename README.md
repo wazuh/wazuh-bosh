@@ -75,7 +75,7 @@ bosh -e your_bosh_environment upload-blobs
 
 **Create release**
 ```
-bosh -e your_bosh_environment create-release --final --version=4.1.5
+bosh -e your_bosh_environment create-release --final --version=4.2.5
 ```
 
 **Upload release**
@@ -195,11 +195,11 @@ To pass your generated `sslagent.cert` and `sslagent.key` files to your runtime 
 ---
   releases:
   - name: "wazuh"
-    version: 4.1.5
+    version: 4.2.5
 
   addons:
   - name: wazuh
-    release: 4.1.5
+    release: 4.2.5
     jobs:
     - name: wazuh-agent
       release: wazuh

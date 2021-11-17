@@ -16,7 +16,7 @@ apt-get build-dep python3.5 -y
 
 ```
 cd ~
-curl -Ls https://github.com/wazuh/wazuh/archive/refs/tags/v4.1.5.tar.gz | tar xz
+curl -Ls https://github.com/wazuh/wazuh/archive/refs/tags/v4.2.5.tar.gz | tar xz
 #curl -Ls https://github.com/wazuh/wazuh/archive/stable.tar.gz | tar zx
 mv wazuh-*/ wazuh
 cd wazuh/src
