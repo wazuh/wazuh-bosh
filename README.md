@@ -59,8 +59,8 @@ curl https://packages.wazuh.com/bosh/wazuh-agent-4.2.5.tar.gz -o blobs/wazuh/waz
 
 **Add blobs to Bosh environment**
 ```
-bosh add-blob blobs/wazuh/wazuh-manager.tar.gz /wazuh/wazuh-manager.tar.gz
-bosh add-blob blobs/wazuh/wazuh-agent.tar.gz /wazuh/wazuh-agent.tar.gz
+bosh -e your_bosh_environment add-blob blobs/wazuh/wazuh-manager.tar.gz /wazuh/wazuh-manager.tar.gz
+bosh -e your_bosh_environment add-blob blobs/wazuh/wazuh-agent.tar.gz /wazuh/wazuh-agent.tar.gz
 ```
 
 **Upload blobs to the blob store**
@@ -252,8 +252,8 @@ rm -rf releases/wazuh/
 ```
 **Blobs**
 ```
-bosh remove-blob /wazuh/wazuh-agent.tar.gz
-bosh remove-blob /wazuh/wazuh-manager.tar.gz
+bosh -e your_bosh_environment remove-blob /wazuh/wazuh-agent.tar.gz
+bosh -e your_bosh_environment remove-blob /wazuh/wazuh-manager.tar.gz
 ```
 
 ## General usage notes
