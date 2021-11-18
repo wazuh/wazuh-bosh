@@ -13,5 +13,5 @@ docker build . -t create_binaries:4.2.5
 ```
 docker run --rm -ti --name bosh_binaries -v <localDirectoryPath>:/root/packages -e WAZUH_VERSION=4.2.5 create_binaries:4.2.5
 ```
-Where <localDirectoryPath> must be replaced with the absolute path of the local directory where the compressed files will be stored.
+Where `<localDirectoryPath>` must be replaced with the absolute path of the local directory where the compressed files will be stored.
 This Docker will create the packages for the Manager and the Agent.

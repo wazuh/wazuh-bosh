@@ -89,9 +89,3 @@ check process wazuh-db
 #  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
 #  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
 #  group vcap
-
-check process wazuh-apid
-  matching "wazuh-apid"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
-  group vcap
