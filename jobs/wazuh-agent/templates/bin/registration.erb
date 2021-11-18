@@ -22,8 +22,8 @@ do
       then
         cp ${PACKAGE_DIR}/etc/client.keys ${INSTALL_DIR}/etc/
         echo "$TIMESTAMP : INFO : Registration success"  >> ${LOG_DIR}/setup.log
-        ${JOB_DIR}/bin/wazuh_agent_ctl ossec-agentd stop
-        ${JOB_DIR}/bin/wazuh_agent_ctl ossec-agentd start
+        ${JOB_DIR}/bin/wazuh_agent_ctl wazuh-agentd stop
+        ${JOB_DIR}/bin/wazuh_agent_ctl wazuh-agentd start
       else
         cp ${JOB_DIR}/config/client.keys.sample ${INSTALL_DIR}/etc/client.keys
         echo "$TIMESTAMP : ERROR : Registration failure"  >> ${LOG_DIR}/setup.log
@@ -36,8 +36,8 @@ do
         exit 0
       else
         echo "$TIMESTAMP : ERROR : Agent not connected to the Manager."  >> ${LOG_DIR}/setup.log
-        ${JOB_DIR}/bin/wazuh_agent_ctl ossec-agentd stop
-        ${JOB_DIR}/bin/wazuh_agent_ctl ossec-agentd start
+        ${JOB_DIR}/bin/wazuh_agent_ctl wazuh-agentd stop
+        ${JOB_DIR}/bin/wazuh_agent_ctl wazuh-agentd start
       fi
   fi
   sleep 120

@@ -25,7 +25,7 @@ case $1 in
     
     ;;
   *)
-    echo "Usage: wazuh_server_ctl {ossec-daemon}{start|stop}"
+    echo "Usage: wazuh_server_ctl {wazuh-daemon}{start|stop}"
 
     ;;
 

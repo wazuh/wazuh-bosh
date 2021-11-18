@@ -32,7 +32,7 @@ case $1 in
 
     ;;
   *)
-    echo "Usage: wazuh_agent_ctl {ossec-daemon}{start|stop}"
+    echo "Usage: wazuh_agent_ctl {wazuh-daemon}{start|stop}"
 
     ;;
 
