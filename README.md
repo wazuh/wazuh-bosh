@@ -53,8 +53,8 @@ Where **wazuh_server_worker_address_2** and **wazuh_server_worker_address_3** ar
 
 **Download blobs from the `S3` repository using Curl**
 ```
-curl https://packages-dev.wazuh.com/bosh/wazuh-manager-4.2.5.tar.gz -o blobs/wazuh/wazuh-manager.tar.gz
-curl https://packages-dev.wazuh.com/bosh/wazuh-agent-4.2.5.tar.gz -o blobs/wazuh/wazuh-agent.tar.gz
+curl https://packages.wazuh.com/bosh/wazuh-manager-4.2.5.tar.gz -o blobs/wazuh/wazuh-manager.tar.gz
+curl https://packages.wazuh.com/bosh/wazuh-agent-4.2.5.tar.gz -o blobs/wazuh/wazuh-agent.tar.gz
 ```
 
 **Add blobs to Bosh environment**
