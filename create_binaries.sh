@@ -1,3 +1,4 @@
+#!/bin/bash
 cd /root/wazuh/src
 make deps
 make clean

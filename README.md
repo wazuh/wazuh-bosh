@@ -51,17 +51,6 @@ First of all it will be neccessary to determine the kind of deployment. If it is
 ```
 Where **wazuh_server_worker_address_2** and **wazuh_server_worker_address_3** are the properties added on the previous step.
 
-**Install Git LFS (Ubuntu/Debian)**
-```
-curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
-sudo apt-get install git-lfs
-```
-
-**Install Git LFS (MacOS)**
-```
-brew install git-lfs
-```
-
 **Download blobs from the `S3` repository using Curl**
 ```
 curl https://packages-dev.wazuh.com/bosh/wazuh-manager-4.2.5.tar.gz -o blobs/wazuh/wazuh-manager.tar.gz
