@@ -13,13 +13,6 @@ NODE_IP=<%= spec.ip %>
 
 apt-get update
 apt-get install python gcc g++ make libc6-dev curl policycoreutils automake autoconf libtool  libssl-dev -y
-#apt install libssl-dev -y
-cd /root
-curl -OL https://packages.wazuh.com/utils/cmake/cmake-3.18.3.tar.gz && tar -zxf cmake-3.18.3.tar.gz
-cd cmake-3.18.3 && ./bootstrap --no-system-curl
-make -j$(nproc) && make install
-cd .. && rm -rf cmake-*
-apt-get install -y lsb-release
 
 mkdir -p ${INSTALL_DIR}/etc
 rm -f /etc/ossec-init.conf
