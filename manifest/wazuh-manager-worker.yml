@@ -3,7 +3,7 @@ name: wazuh-manager-worker
 
 releases:
 - name: wazuh
-  version: 4.2.5
+  version: 4.2.1
 
 stemcells:
 - alias: default
