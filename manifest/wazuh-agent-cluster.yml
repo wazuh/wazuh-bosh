@@ -1,11 +1,11 @@
 ---
   releases:
   - name: "wazuh"
-    version: 4.2.5
+    version: 4.2.4
   
   addons:
   - name: wazuh
-    release: 4.2.5
+    release: 4.2.4
     jobs:
     - name: wazuh-agent
       release: wazuh
