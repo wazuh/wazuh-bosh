@@ -11,8 +11,8 @@ TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
 INSTALL_DIR=/var/ossec
 NODE_IP=<%= spec.ip %>
 
-apt-get install python gcc make libc6-dev curl policycoreutils automake autoconf libtool
 apt-get update
+apt-get install python gcc g++ make libc6-dev curl policycoreutils automake autoconf libtool  libssl-dev -y
 
 mkdir -p ${INSTALL_DIR}/etc
 rm -f /etc/ossec-init.conf
@@ -28,6 +28,6 @@ if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
     ln -s ${PACKAGE_DIR}/logs/ ${LOG_DIR}/wazuh_logs
 fi
 
-${INSTALL_DIR}/bin/ossec-control start
+${INSTALL_DIR}/bin/wazuh-control start
 
 exit 0

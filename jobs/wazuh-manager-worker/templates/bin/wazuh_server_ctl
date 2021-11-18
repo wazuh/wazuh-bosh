@@ -16,16 +16,16 @@ case $1 in
     mkdir -p $RUN_DIR
     mkdir -p $LOG_DIR
     mkdir -p $STORE_DIR
-    exec ${INSTALL_DIR}/bin/ossec-control $1
+    exec ${INSTALL_DIR}/bin/wazuh-control $1
 
     ;;
 
   stop)
-    exec ${INSTALL_DIR}/bin/ossec-control $1
+    exec ${INSTALL_DIR}/bin/wazuh-control $1
     
     ;;
   *)
-    echo "Usage: wazuh_server_ctl {ossec-daemon}{start|stop}"
+    echo "Usage: wazuh_server_ctl {wazuh-daemon}{start|stop}"
 
     ;;
 

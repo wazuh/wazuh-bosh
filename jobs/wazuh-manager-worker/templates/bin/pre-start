@@ -26,6 +26,6 @@ if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
     ln -s ${PACKAGE_DIR}/logs/ ${LOG_DIR}/wazuh_logs
 fi
 
-${INSTALL_DIR}/bin/ossec-control start
+${INSTALL_DIR}/bin/wazuh-control start
 
 exit 0
