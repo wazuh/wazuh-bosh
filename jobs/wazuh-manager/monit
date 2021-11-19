@@ -1,55 +1,97 @@
-check process ossec-analysisd
-  matching "ossec-analysisd"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-analysisd start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-analysisd stop"
+check process wazuh-analysisd
+  matching "wazuh-analysisd"
+  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
   group vcap
 
-check process ossec-execd
-  matching "ossec-execd"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-execd start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-execd stop"
+check process wazuh-execd
+  matching "wazuh-execd"
+  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
   group vcap
 
-check process ossec-remoted
-  matching "ossec-remoted"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-remoted start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-remoted stop"
-  group vcap
-
-
-check process ossec-logcollector
-  matching "ossec-logcollector"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-logcollector start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-logcollector stop"
+check process wazuh-remoted
+  matching "wazuh-remoted"
+  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
   group vcap
 
 
-check process ossec-syscheckd
- matching "ossec-syscheckd"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-syscheckd start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-syscheckd stop"
+check process wazuh-logcollector
+  matching "wazuh-logcollector"
+  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
   group vcap
 
-check process ossec-monitord
-  matching "ossec-monitord"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-monitord start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-monitord stop"
+
+check process wazuh-syscheckd
+ matching "wazuh-syscheckd"
+  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+  group vcap
+
+check process wazuh-monitord
+  matching "wazuh-monitord"
+  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
   group vcap
 
 check process wazuh-modulesd
   matching "wazuh-modulesd"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl wazuh-modulesd start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl wazuh-modulesd stop"
+  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
   group vcap
 
-check process ossec-authd
-  matching "ossec-authd"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-authd start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl ossec-authd stop"
+check process wazuh-authd
+  matching "wazuh-authd"
+  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
   group vcap
   
 check process wazuh-db
   matching "wazuh-db"
-  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl wazuh-db start"
-  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl wazuh-db stop"
+  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+  group vcap
+
+#check process wazuh-dbd
+#  matching "wazuh-dbd"
+#  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+#  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+#  group vcap
+
+#check process wazuh-clusterd
+#  matching "wazuh-clusterd"
+#  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+#  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+#  group vcap
+
+#check process wazuh-maild
+#  matching "wazuh-maild"
+#  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+#  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+#  group vcap
+
+#check process wazuh-agentlessd
+#  matching "wazuh-agentlessd"
+#  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+#  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+#  group vcap
+
+#check process wazuh-integratord
+#  matching "wazuh-integratord"
+#  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+#  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+#  group vcap
+
+#check process wazuh-csyslogd
+#  matching "wazuh-csyslogd"
+#  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+#  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+#  group vcap
+
+check process wazuh-apid
+  matching "wazuh-apid"
+  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
   group vcap

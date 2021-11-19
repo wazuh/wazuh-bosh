@@ -246,13 +246,13 @@
 
   <cluster>
     <name>wazuh</name>
-    <node_name>node01</node_name>
-    <node_type>master</node_type>
+    <node_name>node02</node_name>
+    <node_type>worker</node_type>
     <key><%= p("cluster_key") %></key>
     <port>1516</port>
     <bind_addr>0.0.0.0</bind_addr>
     <nodes>
-        <node>NODE_IP</node>
+        <node><%= p("wazuh_master_address") %></node>
     </nodes>
     <hidden>no</hidden>
     <disabled>no</disabled>

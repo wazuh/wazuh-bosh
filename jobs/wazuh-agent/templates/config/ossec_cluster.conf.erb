@@ -7,6 +7,11 @@
 <ossec_config>
   <client>
     <server>
+      <address><%= p("wazuh_server_worker_address") %></address>
+      <port>1514</port>
+      <protocol><%= p("wazuh_server_protocol") %></protocol>
+    </server>
+    <server>
       <address><%= p("wazuh_server_address") %></address>
       <port>1514</port>
       <protocol><%= p("wazuh_server_protocol") %></protocol>
