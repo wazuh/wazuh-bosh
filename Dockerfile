@@ -1,5 +1,5 @@
 FROM ubuntu:xenial
-ARG VERSION=4.2.5
+ARG VERSION=4.3.0
 RUN apt-get update && \
     apt-get install git -y
 RUN apt-get install python gcc g++ make libc6-dev curl policycoreutils automake autoconf libtool libssl-dev -y
