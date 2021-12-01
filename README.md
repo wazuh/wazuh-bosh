@@ -2,17 +2,17 @@
 
 ## Prepare release
 
-**Clone repository and checkout to branch v4.2.5**
+**Clone repository and checkout to branch v4.3.0**
 ```
 git clone https://github.com/wazuh/wazuh-bosh
 cd wazuh-bosh
-git checkout v4.2.5
+git checkout v4.3.0
 ```
 
 **Single or Multi Node Wazuh Cluster**
 
 First of all it will be neccessary to determine the kind of deployment. If it is a Multi Node Cluster with more than one Worker Node there will be some changes to apply prior to the Release creation:
-- In [manifest/wazuh-agent-cluster.yml](https://github.com/wazuh/wazuh-bosh/blob/v4.2.5/manifest/wazuh-agent-cluster.yml) add a new property (wazuh_server_worker_address_#) for each extra worker node. The IPs can be assigned before the deployment. Example:
+- In [manifest/wazuh-agent-cluster.yml](https://github.com/wazuh/wazuh-bosh/blob/v4.3.0/manifest/wazuh-agent-cluster.yml) add a new property (wazuh_server_worker_address_#) for each extra worker node. The IPs can be assigned before the deployment. Example:
 ```yaml
       properties:
           wazuh_server_address: 172.31.32.4 
@@ -26,7 +26,7 @@ First of all it will be neccessary to determine the kind of deployment. If it is
           wazuh_multinode: true
 ```
 
-- Add another server tag for each extra worker node on [jobs/wazuh-agent/templates/config/ossec_cluster.conf.erb](https://github.com/wazuh/wazuh-bosh/blob/v4.2.5/jobs/wazuh-agent/templates/config/ossec_cluster.conf.erb). Example:
+- Add another server tag for each extra worker node on [jobs/wazuh-agent/templates/config/ossec_cluster.conf.erb](https://github.com/wazuh/wazuh-bosh/blob/v4.3.0/jobs/wazuh-agent/templates/config/ossec_cluster.conf.erb). Example:
 ```xml
     <server>
       <address><%= p("wazuh_server_worker_address") %></address>
@@ -54,8 +54,8 @@ Where **wazuh_server_worker_address_2** and **wazuh_server_worker_address_3** ar
 **Download blobs from the `S3` repository using Curl**
 ```
 mkdir -p blobs/wazuh
-curl https://packages.wazuh.com/bosh/wazuh-manager-4.2.5.tar.gz -o blobs/wazuh/wazuh-manager.tar.gz
-curl https://packages.wazuh.com/bosh/wazuh-agent-4.2.5.tar.gz -o blobs/wazuh/wazuh-agent.tar.gz
+curl https://packages.wazuh.com/bosh/wazuh-manager-4.3.0.tar.gz -o blobs/wazuh/wazuh-manager.tar.gz
+curl https://packages.wazuh.com/bosh/wazuh-agent-4.3.0.tar.gz -o blobs/wazuh/wazuh-agent.tar.gz
 ```
 
 **Add blobs to Bosh environment**
@@ -71,7 +71,7 @@ bosh -e your_bosh_environment upload-blobs
 
 **Create release**
 ```
-bosh -e your_bosh_environment create-release --final --version=4.2.5 --force
+bosh -e your_bosh_environment create-release --final --version=4.3.0 --force
 ```
 
 **Upload release**
@@ -127,9 +127,9 @@ wazuh-apid is running...
 **Deploy Worker Node**
 
 Execute this step only if you need to deploy a multi-node Wazuh Cluster.
-Configure [manifest/wazuh-manager-worker.yml](https://github.com/wazuh/wazuh-bosh/blob/v4.2.5/manifest/wazuh-manager-worker.yml) according to the number of **instances** you want to create.
+Configure [manifest/wazuh-manager-worker.yml](https://github.com/wazuh/wazuh-bosh/blob/v4.3.0/manifest/wazuh-manager-worker.yml) according to the number of **instances** you want to create.
 
-Obtain the address of your recently deployed Wazuh Manager and update the `wazuh_master_address` setting in the [manifest/wazuh-manager-worker.yml](https://github.com/wazuh/wazuh-bosh/blob/v4.2.5/manifest/wazuh-manager-worker.yml) runtime configuration file.
+Obtain the address of your recently deployed Wazuh Manager and update the `wazuh_master_address` setting in the [manifest/wazuh-manager-worker.yml](https://github.com/wazuh/wazuh-bosh/blob/v4.3.0/manifest/wazuh-manager-worker.yml) runtime configuration file.
 Use the following command to obtain the IP:
 ```
 bosh -e your_bosh_environment vms
@@ -143,7 +143,7 @@ bosh -e your_bosh_environment -d wazuh-manager-worker deploy manifest/wazuh-mana
 
 **Single Node Wazuh Cluster**
 
-Obtain the address of your recently deployed Wazuh Manager and update the `wazuh_server_address` and `wazuh_server_registration_address` settings in the [manifest/wazuh-agent.yml](https://github.com/wazuh/wazuh-bosh/blob/v4.2.5/manifest/wazuh-agent.yml) runtime configuration file.
+Obtain the address of your recently deployed Wazuh Manager and update the `wazuh_server_address` and `wazuh_server_registration_address` settings in the [manifest/wazuh-agent.yml](https://github.com/wazuh/wazuh-bosh/blob/v4.3.0/manifest/wazuh-agent.yml) runtime configuration file.
 
 **NOTE: `wazuh_server_worker_address` will not be used in this deployment but it must have a value.**
 
@@ -162,7 +162,7 @@ Redeploy your initial manifest to make Bosh install and configure the Wazuh Agen
 
 **Multi Node Wazuh Cluster**
 
-Obtain the address of your recently deployed Wazuh Manager Master and Worker nodes and update the following settings in the [manifest/wazuh-agent-cluster.yml](https://github.com/wazuh/wazuh-bosh/blob/v4.2.5/manifest/wazuh-agent-cluster.yml) runtime configuration file.
+Obtain the address of your recently deployed Wazuh Manager Master and Worker nodes and update the following settings in the [manifest/wazuh-agent-cluster.yml](https://github.com/wazuh/wazuh-bosh/blob/v4.3.0/manifest/wazuh-agent-cluster.yml) runtime configuration file.
 - `wazuh_server_address` (Master Node IP)
 - `wazuh_server_registration_address` (Master Node IP) 
 - `wazuh_server_worker_address` (Worker Node IP). If there are more than one worker nodes assign the values to the `wazuh_server_worker_address_#` properties.
@@ -191,11 +191,11 @@ To pass your generated `sslagent.cert` and `sslagent.key` files to your runtime 
 ---
   releases:
   - name: "wazuh"
-    version: 4.2.5
+    version: 4.3.0
 
   addons:
   - name: wazuh
-    release: 4.2.5
+    release: 4.3.0
     jobs:
     - name: wazuh-agent
       release: wazuh
@@ -247,7 +247,7 @@ bosh -e your_bosh_environment update-runtime-config --name=wazuh-agent-addons ma
 ```
 **Wazuh Release**
 ```
-bosh -e your_bosh_environment delete-release wazuh/4.2.5
+bosh -e your_bosh_environment delete-release wazuh/4.3.0
 rm -rf dev_releases/wazuh/
 rm -rf releases/wazuh/
 ```
