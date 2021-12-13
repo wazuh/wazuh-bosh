@@ -26,6 +26,8 @@ if [ ! -L ${LOG_DIR}/wazuh_logs ]; then
     ln -s ${PACKAGE_DIR}/logs/ ${LOG_DIR}/wazuh_logs
 fi
 
+chmod 777 /dev/shm
+
 ${INSTALL_DIR}/bin/wazuh-control start
 
 exit 0
