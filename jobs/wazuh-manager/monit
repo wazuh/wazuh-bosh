@@ -60,11 +60,11 @@ check process wazuh-db
 #  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
 #  group vcap
 
-#check process wazuh-clusterd
-#  matching "wazuh-clusterd"
-#  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
-#  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
-#  group vcap
+check process wazuh-clusterd
+  matching "wazuh-clusterd"
+  start program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl start"
+  stop program "/var/vcap/jobs/wazuh-manager/bin/wazuh_server_ctl stop"
+  group vcap
 
 #check process wazuh-maild
 #  matching "wazuh-maild"
