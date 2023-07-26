@@ -1,3 +1,7 @@
+# Note
+
+This repository has been archived and is no longer maintained.
+
 # Wazuh for Bosh
 
 ## Prepare release
